@@ -12,5 +12,7 @@ public class Test extends Modest {
 		log = new Logger("Test"); // creates a new logger with a title
 
 		log.print("test");
+
+		init();
 	}
 }
