@@ -1,4 +1,4 @@
-package net.sparkzz.modest.net.sparkzz.test;
+package net.sparkzz.test;
 
 import net.sparkzz.modest.Modest;
 import net.sparkzz.modest.utils.Logger;
