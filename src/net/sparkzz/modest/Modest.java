@@ -22,6 +22,6 @@ public class Modest {
 	}
 
 	public static void run() {
-		log.print("running...");
+		//log.print("running...");
 	}
 }
