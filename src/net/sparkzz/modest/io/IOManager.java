@@ -1,5 +1,6 @@
 package net.sparkzz.modest.io;
 
+import net.sparkzz.modest.Modest;
 import net.sparkzz.modest.utils.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -44,11 +45,10 @@ public class IOManager {
 	public static JSONObject read(File file) {
 		try {
 			if (!file.exists()) {
-				log.print("File doesn't exist!");
+				log.warn("File doesn't exist!");
 				return new JSONObject();
 			}
 
-			log.print(file.toString());
 			return (JSONObject) parser.parse(new FileReader(file));
 		} catch (IOException e) {
 			e.printStackTrace();

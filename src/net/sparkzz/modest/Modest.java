@@ -15,7 +15,7 @@ public class Modest {
 	private static int targetTicks = 25, ticks;
 	private static long currTime, nextTime;
 
-	public static Logger log = new Logger();
+	public static Logger log = new Logger("ModestAPI");
 
 	public Modest() {
 
@@ -37,7 +37,7 @@ public class Modest {
 				ticks++;
 			}
 
-			log.print("[UPS} %s", ticks);
+			log.infof("[UPS} %s", ticks);
 		}
 	}
 
