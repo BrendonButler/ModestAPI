@@ -7,7 +7,7 @@ import net.sparkzz.modest.utils.Logger;
  *
  * v1 Command Based Game API
  */
-public class ModestGame {
+public class Modest {
 
 	private static boolean running = false;
 
@@ -17,11 +17,11 @@ public class ModestGame {
 
 	public static Logger log = new Logger();
 
-	public ModestGame() {
+	public Modest() {
 
 	}
 
-	public ModestGame(int TPS) {
+	public Modest(int TPS) {
 		targetTicks = TPS;
 	}
 

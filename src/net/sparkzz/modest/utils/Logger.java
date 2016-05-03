@@ -5,7 +5,7 @@ package net.sparkzz.modest.utils;
  */
 public class Logger {
 
-	private String title;
+	private String title = "ModestAPI";
 
 	private void output(String message) {
 		System.out.printf("%s%n", message);
