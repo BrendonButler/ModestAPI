@@ -1,6 +1,5 @@
 package net.sparkzz.modest.io;
 
-import net.sparkzz.modest.Modest;
 import net.sparkzz.modest.utils.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

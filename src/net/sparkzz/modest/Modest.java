@@ -11,17 +11,42 @@ public class Modest {
 
 	private static boolean running = false;
 
+	// (UPS) Updates Per Second | (TPS) Ticks Per Second
+	private static int targetTicks = 25, ticks;
+	private static long currTime, nextTime;
+
 	public static Logger log = new Logger();
 
+	public Modest() {
+
+	}
+
+	public Modest(int TPS) {
+		targetTicks = TPS;
+	}
+
 	public static void init() {
-		running = true;
+		running = true; // start game
 
 		while (running) {
-			run();
+			ticks = 0;
+			nextTime = System.currentTimeMillis() + 1000;
+
+			while (System.currentTimeMillis() < nextTime && ticks < targetTicks) {
+				update();
+				ticks++;
+			}
+
+			log.print("[UPS} %s", ticks);
 		}
 	}
 
-	public static void run() {
-		//log.print("running...");
+	//
+	public static void update() {
+		try {
+			Thread.sleep(25);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }

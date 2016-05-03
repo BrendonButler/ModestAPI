@@ -27,4 +27,8 @@ public class Logger {
 		if (title == null) output(message);
 		else titled(message);
 	}
+
+	public void print(String message, Object... objects) {
+		print(String.format(message, objects));
+	}
 }
