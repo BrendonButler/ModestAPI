@@ -1,13 +1,10 @@
 package net.sparkzz.modest.io;
 
 import net.sparkzz.modest.utils.Validator;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.File;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Brendon Butler on 5/2/2016.
@@ -16,6 +13,7 @@ public class Config extends Validator {
 
 	private File configLocation;
 	private JSONObject object;
+	Map<String, Object> tempMap;
 	private Object tempObject;
 	private String fileName;
 
@@ -29,6 +27,10 @@ public class Config extends Validator {
 		configLocation = folder;
 		this.fileName = fileName;
 		object = new JSONObject();
+	}
+
+	public boolean containsKey(String key) {
+		return object.containsKey(key);
 	}
 
 	public boolean getBoolean(String key) {
@@ -45,6 +47,10 @@ public class Config extends Validator {
 		return false;
 	}
 
+	public boolean isEmpty() {
+		return object.isEmpty();
+	}
+
 	public byte getByte(String key) {
 		return (byte) getInteger(key);
 	}
@@ -58,6 +64,12 @@ public class Config extends Validator {
 		if (tempObject instanceof String)
 			return tempObject.toString().charAt(0);
 		return Character.MIN_VALUE;
+	}
+
+	public Collection getList(String key) {
+		if (object.get(key) instanceof Collection<?>)
+			return (Collection<?>) object.get(key);
+		return null;
 	}
 
 	public double getDouble(String key) {
@@ -79,18 +91,28 @@ public class Config extends Validator {
 		return -1;
 	}
 
-	public Collection getList(String key) {
-		if (object.get(key) instanceof Collection<?>)
-			return (Collection<?>) object.get(key);
-		return null;
-	}
-
 	public long getLong(String key) {
 		return (long) getInteger(key);
 	}
 
+	public Map<String, Object> getValues() {
+		tempMap = new HashMap<String, Object>();
+
+		for (String curr : getKeys()) {
+			tempMap.put(curr, object.get(curr));
+		}
+
+		return tempMap;
+	}
+
 	public Object get(String key) {
 		return object.get(key);
+	}
+
+	public Set<String> getKeys() {
+		if (!isEmpty())
+			return (Set<String>) object.keySet();
+		return null;
 	}
 
 	public short getShort(String key) {

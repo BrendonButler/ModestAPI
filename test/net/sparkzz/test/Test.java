@@ -4,9 +4,7 @@ import net.sparkzz.modest.Modest;
 import net.sparkzz.modest.io.Config;
 import net.sparkzz.modest.utils.Logger;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Brendon Butler on 3/28/2016.
@@ -18,19 +16,15 @@ public class Test extends Modest {
 
 		log.print("test");
 
-		Config config = new Config(new File(System.getProperty("user.dir") + "/test"), "file-name"); // look, no extension necessary! :)
+		Config config = new Config(); // look, no extension necessary! :)
 
 		config.load();
 		log.print("" + config.getString("Horse"));
 
-		List<String> stringList = new ArrayList(config.getList("list"));
 
-		log.print(stringList.get(1));
+		Map<String, Object> map = config.getValues();
 
-		stringList.add("Hello");
-		stringList.add("World");
-
-		config.set("list", stringList);
+		log.print("" + map.get("list"));
 
 		config.set("Horse", 10000.00);
 		config.save();

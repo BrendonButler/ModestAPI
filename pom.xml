@@ -7,6 +7,23 @@
     <groupId>net.sparkzz.modestapi</groupId>
     <artifactId>ModestAPI</artifactId>
     <version>0.0.0.1</version>
+	<packaging>jar</packaging>
+
+	<name>ModestAPI</name>
+	<description>Simple API for text based games</description>
+	<url>http://modest.sparkzz.net/</url>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>"https://api.github.com/licenses/mit</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>http://svn.apache.org/viewvc/maven</url>
+	</scm>
 
     <dependencies>
         <dependency>
