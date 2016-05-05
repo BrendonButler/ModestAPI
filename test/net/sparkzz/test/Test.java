@@ -1,8 +1,8 @@
 package net.sparkzz.test;
 
 import net.sparkzz.modest.Modest;
-import net.sparkzz.modest.io.Config;
-import net.sparkzz.modest.io.JSONConfig;
+import net.sparkzz.modest.io.config.Config;
+import net.sparkzz.modest.io.config.JSONConfig;
 import net.sparkzz.modest.utils.Logger;
 
 /**

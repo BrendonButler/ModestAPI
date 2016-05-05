@@ -1,4 +1,4 @@
-package net.sparkzz.modest.io;
+package net.sparkzz.modest.io.config;
 
 import java.util.*;
 

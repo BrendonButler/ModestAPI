@@ -1,5 +1,6 @@
-package net.sparkzz.modest.io;
+package net.sparkzz.modest.io.config;
 
+import net.sparkzz.modest.io.IOManager;
 import net.sparkzz.modest.utils.Validator;
 import org.json.simple.JSONObject;
 
