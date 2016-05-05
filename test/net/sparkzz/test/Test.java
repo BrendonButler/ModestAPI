@@ -3,8 +3,6 @@ package net.sparkzz.test;
 import net.sparkzz.modest.Modest;
 import net.sparkzz.modest.utils.Logger;
 
-import java.util.logging.Level;
-
 /**
  * Created by Brendon Butler on 3/28/2016.
  */
@@ -13,7 +11,16 @@ public class Test extends Modest {
 	public static void main(String[] args) {
 		log = new Logger("Test"); // creates a new logger with a title
 
-		log.log(Level.INFO, "Hello, world!", "I'm here for cookies!");
+		save();
+		log.info("WHOA");
+		log.info("WHOA", "THIS IS PRETTY COOL", "YEAH".toLowerCase());
+
+		init();
+
+		log.warn("Things are getting a little crazy, bruh");
+		log.severe("WORKS WELL DUH");
+
+		save();
 
 		System.exit(0);
 	}

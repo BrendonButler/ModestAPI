@@ -1,5 +1,10 @@
 package net.sparkzz.modest.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -7,10 +12,22 @@ import java.util.logging.Level;
  */
 public class Logger {
 
+	private boolean debug = false;
+	private Date date;
+	private List<String> logCache;
+	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 	private String title = "ModestAPI";
 
 	public Logger(String title) {
 		this.title = title;
+	}
+
+	public List<String> getData() {
+		return logCache;
+	}
+
+	public void debug(boolean value) {
+		debug = value;
 	}
 
 	public void info(String message) {
@@ -26,7 +43,13 @@ public class Logger {
 	}
 
 	public void log(Level level, String message) {
-		System.out.printf("[%s][%s] %s%n", title, level.getLocalizedName(), message);
+		if (debug)
+			System.out.printf("[%s][%s] %s%n", title, level.getLocalizedName(), message);
+
+		if (logCache == null)
+			logCache = Collections.synchronizedList(new ArrayList<String>());
+		date = new Date();
+		logCache.add(String.format("[%s][%s][%s] %s%n", sdf.format(date), title, level.getLocalizedName(), message));
 	}
 
 	public void log(Level level, String... messages) {

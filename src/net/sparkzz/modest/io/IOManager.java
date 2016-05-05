@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Brendon Butler on 5/2/2016.
@@ -19,6 +20,7 @@ public class IOManager {
 	private static File file;
 	private static FileWriter writer;
 	private static JSONParser parser = new JSONParser();
+	private static List<String> data;
 	private static Logger log = Modest.log;
 
 	public static void write(File folder, String fileName, JSONObject object) {
@@ -28,9 +30,8 @@ public class IOManager {
 
 			file = new File(folder, fileName + ".json");
 
-			if (!file.exists()) {
+			if (!file.exists())
 				file.createNewFile();
-			}
 
 			writer = new FileWriter(file);
 
@@ -56,5 +57,28 @@ public class IOManager {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static void saveLog() {
+		data = log.getData();
+
+		if (data != null) {
+			try {
+				file = new File(System.getProperty("user.dir") + "/data/log.txt");
+
+				if (!file.exists())
+					file.createNewFile();
+
+				writer = new FileWriter(file);
+
+				for (String line : data)
+					writer.write(line);
+
+				writer.flush();
+				writer.close();
+			} catch (IOException exception) {
+				exception.printStackTrace();
+			}
+		}
 	}
 }
