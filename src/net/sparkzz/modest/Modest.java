@@ -11,8 +11,7 @@ import net.sparkzz.modest.utils.Logger;
 public class Modest {
 
 	private static boolean running = false;
-
-	public static Logger log = new Logger("ModestAPI");
+	private static Logger log = new Logger("ModestAPI");
 
 	public static void init() {
 
@@ -20,5 +19,9 @@ public class Modest {
 
 	public static void save() {
 		IOManager.saveLog();
+	}
+
+	public static Logger getLogger() {
+		return log;
 	}
 }

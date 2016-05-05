@@ -21,7 +21,7 @@ public class IOManager {
 	private static FileWriter writer;
 	private static JSONParser parser = new JSONParser();
 	private static List<String> data;
-	private static Logger log = Modest.log;
+	private static Logger log = Modest.getLogger();
 
 	public static void write(File folder, String fileName, JSONObject object) {
 		try {

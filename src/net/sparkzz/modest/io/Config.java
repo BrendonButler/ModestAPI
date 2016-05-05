@@ -1,147 +1,53 @@
 package net.sparkzz.modest.io;
 
-import net.sparkzz.modest.utils.Validator;
-import org.json.simple.JSONObject;
-
-import java.io.File;
 import java.util.*;
 
 /**
  * Created by Brendon Butler on 5/2/2016.
  */
-public class Config extends Validator {
+public interface Config {
 
-	private File configLocation;
-	private JSONObject object;
-	Map<String, Object> tempMap;
-	private Object tempObject;
-	private String fileName;
+	boolean contains(String key);
 
-	public Config() {
-		configLocation = new File(System.getProperty("user.dir") + "/data");
-		fileName = "config";
-		object = new JSONObject();
-	}
+	boolean containsKey(String key);
 
-	public Config(File folder, String fileName) {
-		configLocation = folder;
-		this.fileName = fileName;
-		object = new JSONObject();
-	}
+	boolean getBoolean(String key);
 
-	public boolean containsKey(String key) {
-		return object.containsKey(key);
-	}
+	boolean hasValue(String key);
 
-	public boolean getBoolean(String key) {
-		tempObject = object.get(key);
+	boolean isEmpty();
 
-		if (tempObject instanceof Boolean)
-			return (Boolean) tempObject;
-		if (tempObject instanceof String){
-			if (tempObject.toString().equalsIgnoreCase("true"))
-				return true;
-			if (tempObject.toString().equalsIgnoreCase("false"))
-				return false;
-		}
-		return false;
-	}
+	byte getByte(String key);
 
-	public boolean isEmpty() {
-		return object.isEmpty();
-	}
+	Collection<?> getCollection(String key);
 
-	public byte getByte(String key) {
-		return (byte) getInteger(key);
-	}
+	char getChar(String key);
 
-	public char getChar(String key) {
-		tempObject = object.get(key);
+	double getDouble(String key);
 
-		if (tempObject instanceof Character)
-			return (Character) tempObject;
+	int getInteger(String key);
 
-		if (tempObject instanceof String)
-			return tempObject.toString().charAt(0);
-		return Character.MIN_VALUE;
-	}
+	List<?> getList(String key);
 
-	public Collection getList(String key) {
-		if (object.get(key) instanceof Collection<?>)
-			return (Collection<?>) object.get(key);
-		return null;
-	}
+	long getLong(String key);
 
-	public double getDouble(String key) {
-		tempObject = object.get(key);
+	Map<String, Object> getValues();
 
-		if (tempObject instanceof Double || isDouble(tempObject.toString()))
-			return Double.parseDouble(tempObject.toString());
-		return -1.0;
-	}
+	Object get(String key);
 
-	public int getInteger(String key) {
-		tempObject = object.get(key);
+	Set<String> getKeys();
 
-		if (tempObject instanceof Double || isDouble(tempObject.toString()))
-			return (int) Double.parseDouble(tempObject.toString());
+	short getShort(String key);
 
-		if (tempObject instanceof Integer || isInteger(tempObject.toString()))
-			return Integer.parseInt(tempObject.toString());
-		return -1;
-	}
+	String getString(String key);
 
-	public long getLong(String key) {
-		return (long) getInteger(key);
-	}
+	Vector<?> getVector(String key);
 
-	public Map<String, Object> getValues() {
-		tempMap = new HashMap<String, Object>();
+	void set(String key, Object object);
 
-		for (String curr : getKeys()) {
-			tempMap.put(curr, object.get(curr));
-		}
+	void load();
 
-		return tempMap;
-	}
+	void reload();
 
-	public Object get(String key) {
-		return object.get(key);
-	}
-
-	public Set<String> getKeys() {
-		if (!isEmpty())
-			return (Set<String>) object.keySet();
-		return null;
-	}
-
-	public short getShort(String key) {
-		return (short) getInteger(key);
-	}
-
-	public String getString(String key) {
-		tempObject = object.get(key);
-
-		if (tempObject instanceof String)
-			return (String) tempObject;
-
-		return "";
-	}
-
-	public void set(String key, Object object) {
-		this.object.put(key, object);
-	}
-
-	public void load() {
-		object = IOManager.read(new File(configLocation + "/" + fileName + ".json"));
-	}
-
-	public void reload() {
-		save();
-		load();
-	}
-
-	public void save() {
-		IOManager.write(configLocation, fileName, object);
-	}
+	void save();
 }

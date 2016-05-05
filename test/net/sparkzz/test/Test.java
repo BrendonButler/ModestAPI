@@ -1,6 +1,8 @@
 package net.sparkzz.test;
 
 import net.sparkzz.modest.Modest;
+import net.sparkzz.modest.io.Config;
+import net.sparkzz.modest.io.JSONConfig;
 import net.sparkzz.modest.utils.Logger;
 
 /**
@@ -8,19 +10,17 @@ import net.sparkzz.modest.utils.Logger;
  */
 public class Test extends Modest {
 
+	private static Logger logger;
+
 	public static void main(String[] args) {
-		log = new Logger("Test"); // creates a new logger with a title
+		logger = new Logger("Test");
 
-		save();
-		log.info("WHOA");
-		log.info("WHOA", "THIS IS PRETTY COOL", "YEAH".toLowerCase());
+		Config config = new JSONConfig();
 
-		init();
+		config.set("Horse", "DEAD HORSE D:");
+		config.set("Health", 20);
 
-		log.warn("Things are getting a little crazy, bruh");
-		log.severe("WORKS WELL DUH");
-
-		save();
+		config.save();
 
 		System.exit(0);
 	}
