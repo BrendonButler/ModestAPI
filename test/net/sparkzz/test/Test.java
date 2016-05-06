@@ -2,7 +2,6 @@ package net.sparkzz.test;
 
 import net.sparkzz.modest.Modest;
 import net.sparkzz.modest.io.config.Config;
-import net.sparkzz.modest.io.config.JSONConfig;
 import net.sparkzz.modest.io.config.YAMLConfig;
 import net.sparkzz.modest.utils.Logger;
 
@@ -18,10 +17,12 @@ public class Test extends Modest {
 
 		Config config = new YAMLConfig();
 
-		config.set("Horse", "DEAD HORSE D:");
-		config.set("Health", 20);
+		System.out.println(config.getChar("health"));
 
-		System.out.println(config.getBoolean("Health"));
+		config.set("horse", "DEAD HORSE D:");
+		config.set("health", 10);
+
+		System.out.println(config.getInteger("health"));
 
 		config.save();
 

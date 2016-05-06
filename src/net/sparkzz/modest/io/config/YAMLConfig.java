@@ -17,6 +17,7 @@ public class YAMLConfig extends Validator implements Config {
 
 	private DumperOptions dumperOptions;
 	private File configLocation;
+	private int indent = 2;
 	private Map<String, Object> data;
 	private Object tempObject;
 	private Representer representer;
@@ -26,28 +27,28 @@ public class YAMLConfig extends Validator implements Config {
 	public YAMLConfig() {
 		configLocation = new File(System.getProperty("user.dir") + "/data");
 		fileName = "config";
-		load();
 
 		setupDumper();
 
 		yaml = new Yaml(representer, dumperOptions);
+		load();
 	}
 
 	public YAMLConfig(File folder, String fileName) {
 		configLocation = folder;
 		this.fileName = fileName;
-		load();
 
 		setupDumper();
 
 		yaml = new Yaml();
+		load();
 	}
 
 	private void setupDumper() {
 		dumperOptions = new DumperOptions();
 		representer = new Representer();
 
-		dumperOptions.setIndent(2);
+		dumperOptions.setIndent(indent);
 		dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 		dumperOptions.setAllowUnicode(Charset.defaultCharset().name().contains("UTF"));
 		representer.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
@@ -117,6 +118,10 @@ public class YAMLConfig extends Validator implements Config {
 
 		if (tempObject instanceof Character)
 			return (Character) tempObject;
+		if (tempObject instanceof String)
+			return tempObject.toString().charAt(0);
+		if (tempObject instanceof Number)
+			return tempObject.toString().charAt(0);
 		return '\u0000';
 	}
 
@@ -238,7 +243,7 @@ public class YAMLConfig extends Validator implements Config {
 	}
 
 	public void load() {
-		data = Collections.synchronizedMap(new HashMap<String, Object>());
+		data = IOManager.readYAML(new File(configLocation + "/config.yaml"), yaml);
 	}
 
 	public void reload() {

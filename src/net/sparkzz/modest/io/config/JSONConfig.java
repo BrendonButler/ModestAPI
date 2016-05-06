@@ -93,6 +93,10 @@ public class JSONConfig extends Validator implements Config {
 
 		if (tempObject instanceof Character)
 			return (Character) tempObject;
+		if (tempObject instanceof String)
+			return tempObject.toString().charAt(0);
+		if (tempObject instanceof Number)
+			return tempObject.toString().charAt(0);
 		return '\u0000';
 	}
 
