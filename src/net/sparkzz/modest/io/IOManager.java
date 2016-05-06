@@ -5,23 +5,29 @@ import net.sparkzz.modest.utils.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.error.YAMLException;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.List;
+import java.io.*;
+import java.util.*;
+
+import static javafx.scene.input.KeyCode.K;
+import static javafx.scene.input.KeyCode.V;
 
 /**
  * Created by Brendon Butler on 5/2/2016.
  */
 public class IOManager {
 
+	private static BufferedReader reader;
 	private static File file;
 	private static FileWriter writer;
 	private static JSONParser parser = new JSONParser();
 	private static List<String> data;
 	private static Logger log = Modest.getLogger();
+	private static Map<String, Object> tempMap, result;
+	private static String tempString;
+	private static StringBuilder builder;
 
 	public static void write(File folder, String fileName, JSONObject object) {
 		try {
@@ -43,10 +49,30 @@ public class IOManager {
 		}
 	}
 
-	public static JSONObject read(File file) {
+	public static void write(File folder, String fileName, String string) {
+		try {
+			if (!folder.exists())
+				folder.mkdir();
+
+			file = new File(folder, fileName + ".yaml");
+
+			if (!file.exists())
+				file.createNewFile();
+
+			writer = new FileWriter(file);
+
+			writer.write(string);
+			writer.flush();
+			writer.close();
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+	}
+
+	public static JSONObject readJSON(File file) {
 		try {
 			if (!file.exists()) {
-				log.warn("File doesn't exist!");
+				log.warn("JSON configuration file doesn't exist!");
 				return new JSONObject();
 			}
 

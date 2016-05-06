@@ -9,7 +9,7 @@ public interface Config {
 
 	boolean contains(String key);
 
-	boolean containsKey(String key);
+	boolean exists();
 
 	boolean getBoolean(String key);
 
