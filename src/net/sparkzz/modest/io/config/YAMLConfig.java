@@ -2,31 +2,55 @@ package net.sparkzz.modest.io.config;
 
 import net.sparkzz.modest.io.IOManager;
 import net.sparkzz.modest.utils.Validator;
-import org.json.simple.JSONObject;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.*;
 
 /**
- * Created by Brendon Butler on 5/2/2016.
+ * Created by Brendon Butler on 5/5/2016.
  */
-public class JSONConfig extends Validator implements Config {
+public class YAMLConfig extends Validator implements Config {
 
+	private DumperOptions dumperOptions;
 	private File configLocation;
-	private JSONObject data;
+	private Map<String, Object> data;
 	private Object tempObject;
+	private Representer representer;
 	private String fileName;
+	private Yaml yaml;
 
-	public JSONConfig() {
+	public YAMLConfig() {
 		configLocation = new File(System.getProperty("user.dir") + "/data");
 		fileName = "config";
-		data = new JSONObject();
+		load();
+
+		setupDumper();
+
+		yaml = new Yaml(representer, dumperOptions);
 	}
 
-	public JSONConfig(File folder, String fileName) {
+	public YAMLConfig(File folder, String fileName) {
 		configLocation = folder;
 		this.fileName = fileName;
-		data = new JSONObject();
+		load();
+
+		setupDumper();
+
+		yaml = new Yaml();
+	}
+
+	private void setupDumper() {
+		dumperOptions = new DumperOptions();
+		representer = new Representer();
+
+		dumperOptions.setIndent(2);
+		dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
+		dumperOptions.setAllowUnicode(Charset.defaultCharset().name().contains("UTF"));
+		representer.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
 	}
 
 	public boolean contains(String key) {
@@ -163,7 +187,7 @@ public class JSONConfig extends Validator implements Config {
 	}
 
 	public void load() {
-		data = IOManager.readJSON(new File(configLocation + "/" + fileName + ".json"));
+		data = Collections.synchronizedMap(new HashMap<String, Object>());
 	}
 
 	public void reload() {
@@ -172,6 +196,6 @@ public class JSONConfig extends Validator implements Config {
 	}
 
 	public void save() {
-		IOManager.write(configLocation, fileName, data);
+		IOManager.write(configLocation, fileName, yaml.dump(data));
 	}
 }
