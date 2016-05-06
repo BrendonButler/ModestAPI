@@ -5,30 +5,7 @@ package net.sparkzz.modest.utils;
  */
 public class Validator {
 
-	public static boolean isInteger(String string) {
-		if (string == null) return false;
-
-		int length = string.length();
-
-		if (length == 0) return false;
-
-		int i = 0;
-
-		if (string.charAt(0) == '-') {
-			if (length == 1) return false;
-
-			i = 1;
-		}
-
-		for (; i < length; i++) {
-			char c = string.charAt(i);
-
-			if (c <= '/' || c >= ':') return false;
-		}
-		return true;
-	}
-
-	public static boolean isDouble(String str) {
+	public static boolean isDecimalNumber(String str) {
 		if (str == null) {
 			return false;
 		}
@@ -63,6 +40,29 @@ public class Validator {
 
 		if (numOfDot != 1 )
 			return false;
+		return true;
+	}
+
+	public static boolean isNumber(String string) {
+		if (string == null) return false;
+
+		int length = string.length();
+
+		if (length == 0) return false;
+
+		int i = 0;
+
+		if (string.charAt(0) == '-') {
+			if (length == 1) return false;
+
+			i = 1;
+		}
+
+		for (; i < length; i++) {
+			char c = string.charAt(i);
+
+			if (c <= '/' || c >= ':') return false;
+		}
 		return true;
 	}
 }

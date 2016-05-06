@@ -66,6 +66,16 @@ public class YAMLConfig extends Validator implements Config {
 
 		if (tempObject instanceof Boolean)
 			return (Boolean) tempObject;
+		if (tempObject instanceof String)
+			if (tempObject.toString().equalsIgnoreCase("true") || tempObject.toString().equalsIgnoreCase("1"))
+				return true;
+			else if (tempObject.toString().equalsIgnoreCase("false") || tempObject.toString().equalsIgnoreCase("0"))
+				return false;
+		if (tempObject instanceof Number)
+			if (((Number) tempObject).intValue() == 1)
+				return true;
+			if (((Number) tempObject).intValue() == 0)
+				return false;
 		return false;
 	}
 
@@ -86,6 +96,11 @@ public class YAMLConfig extends Validator implements Config {
 
 		if (tempObject instanceof Byte)
 			return (Byte) tempObject;
+		if (tempObject instanceof String)
+			if (Validator.isNumber(tempObject.toString()))
+				return Byte.parseByte(tempObject.toString());
+		if (tempObject instanceof Number)
+			return Byte.parseByte(tempObject.toString());
 		return -1;
 	}
 
@@ -102,7 +117,7 @@ public class YAMLConfig extends Validator implements Config {
 
 		if (tempObject instanceof Character)
 			return (Character) tempObject;
-		return '?';
+		return '\u0000';
 	}
 
 	public double getDouble(String key) {
@@ -110,6 +125,11 @@ public class YAMLConfig extends Validator implements Config {
 
 		if (tempObject instanceof Double)
 			return (Double) tempObject;
+		if (tempObject instanceof String)
+			if (Validator.isDecimalNumber(tempObject.toString()))
+				return Double.parseDouble(tempObject.toString());
+		if (tempObject instanceof Number)
+			return Double.parseDouble(tempObject.toString());
 		return -1;
 	}
 
@@ -118,6 +138,11 @@ public class YAMLConfig extends Validator implements Config {
 
 		if (tempObject instanceof Integer)
 			return (Integer) tempObject;
+		if (tempObject instanceof String)
+			if (Validator.isNumber(tempObject.toString()))
+				return Integer.parseInt(tempObject.toString());
+		if (tempObject instanceof Number)
+			return Integer.parseInt(tempObject.toString());
 		return -1;
 	}
 
@@ -134,7 +159,20 @@ public class YAMLConfig extends Validator implements Config {
 
 		if (tempObject instanceof Long)
 			return (Long) tempObject;
+		if (tempObject instanceof String)
+			if (Validator.isNumber(tempObject.toString()))
+				return Long.parseLong(tempObject.toString());
+		if (tempObject instanceof Number)
+			return Long.parseLong(tempObject.toString());
 		return -1;
+	}
+
+	public Map<?, ?> getMap(String key) {
+		tempObject = get(key);
+
+		if (tempObject instanceof Map<?, ?>)
+			return (Map) tempObject;
+		return null;
 	}
 
 	public Map<String, Object> getValues() {
@@ -149,6 +187,14 @@ public class YAMLConfig extends Validator implements Config {
 		return data.get(key);
 	}
 
+	public Set<?> getSet(String key) {
+		tempObject = get(key);
+
+		if (tempObject instanceof Set<?>)
+			return (Set) tempObject;
+		return null;
+	}
+
 	public Set<String> getKeys() {
 		if (!isEmpty())
 			return data.keySet();
@@ -160,15 +206,20 @@ public class YAMLConfig extends Validator implements Config {
 
 		if (tempObject instanceof Short)
 			return (Short) tempObject;
+		if (tempObject instanceof String)
+			if (Validator.isNumber(tempObject.toString()))
+				return Short.parseShort(tempObject.toString());
+		if (tempObject instanceof Number)
+			return Short.parseShort(tempObject.toString());
 		return -1;
 	}
 
 	public String getString(String key) {
 		tempObject = get(key);
 
-		if (tempObject instanceof Short)
+		if (tempObject instanceof String)
 			return (String) tempObject;
-		return "";
+		return null;
 	}
 
 	public Vector<?> getVector(String key) {

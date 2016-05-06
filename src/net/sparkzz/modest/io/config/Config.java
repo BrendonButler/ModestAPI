@@ -31,9 +31,13 @@ public interface Config {
 
 	long getLong(String key);
 
+	Map<?, ?> getMap(String key);
+
 	Map<String, Object> getValues();
 
 	Object get(String key);
+
+	Set<?> getSet(String key);
 
 	Set<String> getKeys();
 

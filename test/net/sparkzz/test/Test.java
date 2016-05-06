@@ -21,7 +21,7 @@ public class Test extends Modest {
 		config.set("Horse", "DEAD HORSE D:");
 		config.set("Health", 20);
 
-		System.out.println(config.getString("Health"));
+		System.out.println(config.getBoolean("Health"));
 
 		config.save();
 
