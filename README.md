@@ -4,7 +4,7 @@ A simplistic, yet powerful API made to drive console based games and application
 
 Installation
 -
-If you are **not** using framework support, you can download the jar file, [here](http://dl.sparkzz.net/modestapi).
+If you are **not** using framework support, you can download the jar file, [here](http://dl.sparkzz.net/modestapi).<br>
 If you are using framework support, you can view the dependencies, [here](http://sparkzz.net/repo/dependency-info.html):
 
 **Maven**
