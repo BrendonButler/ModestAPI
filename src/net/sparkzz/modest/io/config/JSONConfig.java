@@ -1,6 +1,6 @@
 package net.sparkzz.modest.io.config;
 
-import net.sparkzz.modest.io.IOManager;
+import net.sparkzz.modest.io.FileManager;
 import net.sparkzz.modest.utils.Validator;
 import org.json.simple.JSONObject;
 
@@ -8,7 +8,8 @@ import java.io.File;
 import java.util.*;
 
 /**
- * Created by Brendon Butler on 5/2/2016.
+ * @author Brendon Butler
+ * @since  0.1
  */
 public class JSONConfig extends Validator implements Config {
 
@@ -50,8 +51,8 @@ public class JSONConfig extends Validator implements Config {
 		if (tempObject instanceof Number)
 			if (((Number) tempObject).intValue() == 1)
 				return true;
-		if (((Number) tempObject).intValue() == 0)
-			return false;
+			else if (((Number) tempObject).intValue() == 0)
+				return false;
 		return false;
 	}
 
@@ -218,7 +219,7 @@ public class JSONConfig extends Validator implements Config {
 	}
 
 	public void load() {
-		data = IOManager.readJSON(new File(configLocation + "/" + fileName + ".json"));
+		data = FileManager.readJSON(new File(configLocation + "/" + fileName + ".json"));
 	}
 
 	public void reload() {
@@ -227,6 +228,6 @@ public class JSONConfig extends Validator implements Config {
 	}
 
 	public void save() {
-		IOManager.write(configLocation, fileName, data);
+		FileManager.write(configLocation, fileName, data);
 	}
 }

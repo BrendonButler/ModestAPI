@@ -1,5 +1,8 @@
 package net.sparkzz.modest.utils;
 
+import net.sparkzz.modest.io.FileManager;
+
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,13 +11,13 @@ import java.util.List;
 import java.util.logging.Level;
 
 /**
- * Created by Brendon Butler on 3/28/2016.
+ * @author Brendon Butler
+ * @since  0.1
  */
 public class Logger {
 
 	private boolean debug = false;
 	private Date date;
-	private List<String> logCache;
 	private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 	private String title = "ModestAPI";
 
@@ -23,7 +26,7 @@ public class Logger {
 	}
 
 	public List<String> getData() {
-		return logCache;
+		return FileManager.getLogCache();
 	}
 
 	public void debug(boolean value) {
@@ -46,10 +49,8 @@ public class Logger {
 		if (debug)
 			System.out.printf("[%s][%s] %s%n", title, level.getLocalizedName(), message);
 
-		if (logCache == null)
-			logCache = Collections.synchronizedList(new ArrayList<String>());
 		date = new Date();
-		logCache.add(String.format("[%s][%s][%s] %s%n", sdf.format(date), title, level.getLocalizedName(), message));
+		FileManager.addToLogCache(String.format("[%s][%s][%s] %s%n", sdf.format(date), title, level.getLocalizedName(), message));
 	}
 
 	public void log(Level level, String... messages) {

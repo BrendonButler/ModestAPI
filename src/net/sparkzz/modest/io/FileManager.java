@@ -8,19 +8,21 @@ import org.json.simple.parser.ParseException;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 /**
- * Created by Brendon Butler on 5/2/2016.
+ * @author Brendon Butler
+ * @since  0.1
  */
-public class IOManager {
+public class FileManager {
 
 	private static File file;
 	private static FileWriter writer;
 	private static JSONParser parser = new JSONParser();
-	private static List<String> data;
+	private static List<String> data, logCache = Collections.synchronizedList(new ArrayList<String>());
 	private static Logger log = Modest.getLogger();
 
 	public static JSONObject readJSON(File file) {
@@ -39,6 +41,10 @@ public class IOManager {
 		return null;
 	}
 
+	public static List<String> getLogCache() {
+		return logCache;
+	}
+
 	public static Map<String, Object> readYAML(File file, Yaml yaml) {
 		try {
 			if (!file.exists()) {
@@ -51,6 +57,10 @@ public class IOManager {
 			exception.printStackTrace();
 		}
 		return null;
+	}
+
+	public static void addToLogCache(String message) {
+		logCache.add(message);
 	}
 
 	public static void saveLog() {

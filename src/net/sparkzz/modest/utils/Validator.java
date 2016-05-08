@@ -1,7 +1,8 @@
 package net.sparkzz.modest.utils;
 
 /**
- * Created by Brendon Butler on 5/2/2016.
+ * @author Brendon Butler
+ * @since  0.1
  */
 public class Validator {
 

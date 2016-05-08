@@ -24,6 +24,14 @@ public class Test extends Modest {
 
 		System.out.println(config.getInteger("health"));
 
+		logger.warn("Working!");
+
+		logger = getLogger();
+
+		logger.severe("WORKING SO WELL");
+
+		saveLogs();
+
 		config.save();
 
 		System.exit(0);

@@ -3,7 +3,8 @@ package net.sparkzz.modest.io.console;
 import java.util.Scanner;
 
 /**
- * Created by Brendon Butler on 5/4/2016.
+ * @author Brendon Butler
+ * @since  0.1.1
  */
 public class Console {
 

@@ -1,6 +1,6 @@
 package net.sparkzz.modest.io.config;
 
-import net.sparkzz.modest.io.IOManager;
+import net.sparkzz.modest.io.FileManager;
 import net.sparkzz.modest.utils.Validator;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -11,7 +11,8 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 /**
- * Created by Brendon Butler on 5/5/2016.
+ * @author Brendon Butler
+ * @since  0.1
  */
 public class YAMLConfig extends Validator implements Config {
 
@@ -75,7 +76,7 @@ public class YAMLConfig extends Validator implements Config {
 		if (tempObject instanceof Number)
 			if (((Number) tempObject).intValue() == 1)
 				return true;
-			if (((Number) tempObject).intValue() == 0)
+			else if (((Number) tempObject).intValue() == 0)
 				return false;
 		return false;
 	}
@@ -243,7 +244,7 @@ public class YAMLConfig extends Validator implements Config {
 	}
 
 	public void load() {
-		data = IOManager.readYAML(new File(configLocation + "/config.yaml"), yaml);
+		data = FileManager.readYAML(new File(configLocation + "/config.yaml"), yaml);
 	}
 
 	public void reload() {
@@ -252,6 +253,6 @@ public class YAMLConfig extends Validator implements Config {
 	}
 
 	public void save() {
-		IOManager.write(configLocation, fileName, yaml.dump(data));
+		FileManager.write(configLocation, fileName, yaml.dump(data));
 	}
 }
