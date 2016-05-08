@@ -99,7 +99,7 @@ public class YAMLConfig extends Validator implements Config {
 		if (tempObject instanceof Byte)
 			return (Byte) tempObject;
 		if (tempObject instanceof String)
-			if (Validator.isNumber(tempObject.toString()))
+			if (isNumber(tempObject.toString()))
 				return Byte.parseByte(tempObject.toString());
 		if (tempObject instanceof Number)
 			return Byte.parseByte(tempObject.toString());
@@ -132,7 +132,7 @@ public class YAMLConfig extends Validator implements Config {
 		if (tempObject instanceof Double)
 			return (Double) tempObject;
 		if (tempObject instanceof String)
-			if (Validator.isDecimalNumber(tempObject.toString()))
+			if (isDecimalNumber(tempObject.toString()))
 				return Double.parseDouble(tempObject.toString());
 		if (tempObject instanceof Number)
 			return Double.parseDouble(tempObject.toString());
@@ -145,7 +145,7 @@ public class YAMLConfig extends Validator implements Config {
 		if (tempObject instanceof Integer)
 			return (Integer) tempObject;
 		if (tempObject instanceof String)
-			if (Validator.isNumber(tempObject.toString()))
+			if (isNumber(tempObject.toString()))
 				return Integer.parseInt(tempObject.toString());
 		if (tempObject instanceof Number)
 			return Integer.parseInt(tempObject.toString());
@@ -166,7 +166,7 @@ public class YAMLConfig extends Validator implements Config {
 		if (tempObject instanceof Long)
 			return (Long) tempObject;
 		if (tempObject instanceof String)
-			if (Validator.isNumber(tempObject.toString()))
+			if (isNumber(tempObject.toString()))
 				return Long.parseLong(tempObject.toString());
 		if (tempObject instanceof Number)
 			return Long.parseLong(tempObject.toString());
@@ -213,7 +213,7 @@ public class YAMLConfig extends Validator implements Config {
 		if (tempObject instanceof Short)
 			return (Short) tempObject;
 		if (tempObject instanceof String)
-			if (Validator.isNumber(tempObject.toString()))
+			if (isNumber(tempObject.toString()))
 				return Short.parseShort(tempObject.toString());
 		if (tempObject instanceof Number)
 			return Short.parseShort(tempObject.toString());
