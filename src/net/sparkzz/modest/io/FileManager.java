@@ -8,10 +8,7 @@ import org.json.simple.parser.ParseException;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Brendon Butler
@@ -19,11 +16,15 @@ import java.util.Map;
  */
 public class FileManager {
 
+	private static BufferedReader reader;
 	private static File file;
 	private static FileWriter writer;
 	private static JSONParser parser = new JSONParser();
-	private static List<String> data, logCache = Collections.synchronizedList(new ArrayList<String>());
+	private static List<String> data,
+					logCache = Collections.synchronizedList(new ArrayList<String>()),
+					tempList;
 	private static Logger log = Modest.getLogger();
+	private static Scanner scanner;
 
 	public static JSONObject readJSON(File file) {
 		try {
@@ -43,6 +44,22 @@ public class FileManager {
 
 	public static List<String> getLogCache() {
 		return logCache;
+	}
+
+	public static List<String> readTXT(File file) {
+		tempList = Collections.synchronizedList(new ArrayList<String>());
+		try {
+			scanner = new Scanner(file);
+
+			while (scanner.hasNextLine()) {
+				tempList.add(scanner.nextLine());
+			}
+
+			return tempList;
+		} catch (FileNotFoundException exception) {
+			exception.printStackTrace();
+		}
+		return null;
 	}
 
 	public static Map<String, Object> readYAML(File file, Yaml yaml) {

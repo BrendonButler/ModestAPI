@@ -66,4 +66,10 @@ public class Validator {
 		}
 		return true;
 	}
+
+	public static boolean notNull(Object input) {
+		if (input != null)
+			return true;
+		return false;
+	}
 }

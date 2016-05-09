@@ -3,6 +3,7 @@ package net.sparkzz.test;
 import net.sparkzz.modest.Modest;
 import net.sparkzz.modest.io.config.Config;
 import net.sparkzz.modest.io.config.YAMLConfig;
+import net.sparkzz.modest.io.console.Console;
 import net.sparkzz.modest.utils.Logger;
 
 /**
@@ -13,27 +14,12 @@ public class Test extends Modest {
 	private static Logger logger;
 
 	public static void main(String[] args) {
-		logger = new Logger("Test");
-
-		Config config = new YAMLConfig();
-
-		System.out.println(config.getChar("health"));
-
-		config.set("horse", "DEAD HORSE D:");
-		config.set("health", 10);
-
-		System.out.println(config.getInteger("health"));
-
-		logger.warn("Working!");
-
-		logger = getLogger();
-
-		logger.severe("WORKING SO WELL");
-
-		saveLogs();
-
-		config.save();
-
-		System.exit(0);
+		Console.clear();
+		Console.out("Working");
+		Console.outf("Working, %s", "World!");
+		Console.outln("Working!");
+		Console console = new Console();
+		console.out("This also works!");
+		console.out(Console.prompt());
 	}
 }
