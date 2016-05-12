@@ -7,17 +7,34 @@
     <groupId>net.sparkzz</groupId>
     <artifactId>ModestAPI</artifactId>
 	<!-- [Major.Minor.Revision.Build] -->
-    <version>0.1.2.10</version>
+    <version>0.1.3.14</version>
 	<packaging>jar</packaging>
 
 	<name>ModestAPI</name>
 	<description>Simple API for text based games</description>
 	<url>http://modest.sparkzz.net/</url>
 
+	<developers>
+		<developer>
+			<id>brendon</id>
+			<name>Brendon Butler</name>
+			<email>contact@sparkzz.net</email>
+			<roles>
+				<role>owner</role>
+				<role>developer</role>
+			</roles>
+			<timezone>-5</timezone>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>https://github.com/BrendonButler/ModestAPI.git</url>
+	</scm>
+
 	<licenses>
 		<license>
 			<name>MIT License</name>
-			<url>"https://api.github.com/licenses/mit</url>
+			<url>${basedir}/LICENSE.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
@@ -36,6 +53,20 @@
     </dependencies>
 
 	<build>
+		<sourceDirectory>src/</sourceDirectory>
+		<testSourceDirectory>test/</testSourceDirectory>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<fork>true</fork>
+					<executable>C:\Program Files\Java\jdk8\bin\javac.exe</executable>
+				</configuration>
+			</plugin>
+		</plugins>
+
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
@@ -46,9 +77,13 @@
 	</build>
 
 	<distributionManagement>
+		<repository>
+			<id>sparkzz.net</id>
+			<url>ftp://ftp.sparkzz.net/repo/modestapi/</url>
+		</repository>
 		<site>
 			<id>sparkzz.net</id>
-			<url>ftp://ftp.sparkzz.net/public_html/repo</url>
+			<url>ftp://ftp.sparkzz.net/repo/modestapi/</url>
 		</site>
 	</distributionManagement>
 </project>

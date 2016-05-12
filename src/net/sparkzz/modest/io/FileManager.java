@@ -1,6 +1,6 @@
 package net.sparkzz.modest.io;
 
-import net.sparkzz.modest.Modest;
+import net.sparkzz.modest.ModestGame;
 import net.sparkzz.modest.utils.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,7 +23,7 @@ public class FileManager {
 	private static List<String> data,
 					logCache = Collections.synchronizedList(new ArrayList<String>()),
 					tempList;
-	private static Logger log = Modest.getLogger();
+	private static Logger log = ModestGame.getDefaultLogger();
 	private static Scanner scanner;
 
 	public static JSONObject readJSON(File file) {
