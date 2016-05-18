@@ -19,12 +19,9 @@ public class FileManager {
 	private static BufferedReader reader;
 	private static File file;
 	private static FileWriter writer;
-	private static JSONParser parser = new JSONParser();
-	private static List<String> data,
-					logCache = Collections.synchronizedList(new ArrayList<String>()),
-					tempList;
-	private static Logger log = ModestGame.getDefaultLogger();
-	private static Scanner scanner;
+	private static final JSONParser parser = new JSONParser();
+	private static  List<String> logCache = Collections.synchronizedList(new ArrayList<String>());
+	private static final Logger log = ModestGame.getDefaultLogger();
 
 	public static JSONObject readJSON(File file) {
 		try {
@@ -47,7 +44,8 @@ public class FileManager {
 	}
 
 	public static List<String> readTXT(File file) {
-		tempList = Collections.synchronizedList(new ArrayList<String>());
+        List<String> tempList = Collections.synchronizedList(new ArrayList<String>());
+        Scanner scanner;
 		try {
 			scanner = new Scanner(file);
 
@@ -81,6 +79,8 @@ public class FileManager {
 	}
 
 	public static void saveLog() {
+
+		List<String> data;
 		data = log.getData();
 
 		if (data != null) {

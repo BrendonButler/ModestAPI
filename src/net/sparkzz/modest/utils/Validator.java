@@ -39,9 +39,7 @@ public class Validator {
 			}
 		}
 
-		if (numOfDot != 1 )
-			return false;
-		return true;
+		return (numOfDot == 1);
 	}
 
 	public static boolean isNumber(String string) {
@@ -68,8 +66,6 @@ public class Validator {
 	}
 
 	public static boolean notNull(Object input) {
-		if (input != null)
-			return true;
-		return false;
+		return (input != null);
 	}
 }

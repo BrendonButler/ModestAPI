@@ -59,9 +59,7 @@ public class JSONConfig extends Validator implements Config {
 	public boolean hasValue(String key) {
 		tempObject = data.get(key);
 
-		if (tempObject != null)
-			return true;
-		return false;
+		return tempObject != null;
 	}
 
 	public boolean isEmpty() {

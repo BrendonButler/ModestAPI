@@ -1,7 +1,6 @@
 package net.sparkzz.test;
 
 import net.sparkzz.modest.ModestGame;
-import net.sparkzz.modest.io.console.Console;
 import net.sparkzz.modest.utils.Logger;
 
 /**
