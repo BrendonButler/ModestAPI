@@ -29,7 +29,7 @@ public class ModestGame {
 	/**
 	 * <p>Default logger, should only be accessed by API classes</p>
 	 *
-	 * @return {@see Logger}
+	 * @return {@link Logger}
 	 */
 	public static Logger getDefaultLogger() {
 		return modestLogger;
@@ -37,7 +37,7 @@ public class ModestGame {
 
 	/**
 	 * <p>Default logger at the API level</p>
-	 * <p>New logger should be created </p>
+	 * <p>New logger should be created</p>
 	 */
 	private static Logger modestLogger = new Logger("ModestAPI");
 
@@ -63,8 +63,9 @@ public class ModestGame {
 	private int maxTicks = 10;
 
 	/**
+	 * <p>Can be overwritten to return sub-class logger</p>
 	 *
-	 * @return {@see Logger}
+	 * @return {@link Logger}
 	 */
 	public Logger getLogger() {
 		return null;

@@ -19,7 +19,6 @@ public class Console extends Validator {
 	}
 
 	public static String prompt(String prompt) {
-
 		String tempString;
 
 		if (!notNull(prompt))

@@ -16,12 +16,11 @@ import java.util.*;
  */
 public class FileManager {
 
-	private static BufferedReader reader;
+	private static final JSONParser parser = new JSONParser();
+	private static final Logger log = ModestGame.getDefaultLogger();
 	private static File file;
 	private static FileWriter writer;
-	private static final JSONParser parser = new JSONParser();
-	private static  List<String> logCache = Collections.synchronizedList(new ArrayList<String>());
-	private static final Logger log = ModestGame.getDefaultLogger();
+	private static List<String> logCache = Collections.synchronizedList(new ArrayList<String>());
 
 	public static JSONObject readJSON(File file) {
 		try {
