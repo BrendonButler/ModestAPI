@@ -12,15 +12,16 @@ import java.io.InputStreamReader;
  */
 public class Console extends Validator {
 
-	private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-	private static int tempInt;
-	private static String tempString;
+	private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 	public static String prompt() {
 		return prompt("> ");
 	}
 
 	public static String prompt(String prompt) {
+
+		String tempString;
+
 		if (!notNull(prompt))
 			System.out.println();
 		else System.out.printf(prompt);
@@ -51,7 +52,7 @@ public class Console extends Validator {
 
 	// TODO: need to find a better way of handling this
 	public static void clear() {
-			for (tempInt = 1; tempInt < 50; tempInt++) {
+			for (int tempInt = 1; tempInt < 50; tempInt++) {
 				outln();
 			}
 	}

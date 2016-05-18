@@ -18,7 +18,6 @@ public class YAMLConfig extends Validator implements Config {
 
 	private DumperOptions dumperOptions;
 	private File configLocation;
-	private int indent = 2;
 	private Map<String, Object> data;
 	private Object tempObject;
 	private Representer representer;
@@ -46,6 +45,7 @@ public class YAMLConfig extends Validator implements Config {
 	}
 
 	private void setupDumper() {
+		int indent = 2;
 		dumperOptions = new DumperOptions();
 		representer = new Representer();
 
@@ -84,9 +84,7 @@ public class YAMLConfig extends Validator implements Config {
 	public boolean hasValue(String key) {
 		tempObject = data.get(key);
 
-		if (tempObject != null)
-			return true;
-		return false;
+		return (tempObject != null);
 	}
 
 	public boolean isEmpty() {
