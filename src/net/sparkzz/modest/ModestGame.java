@@ -105,7 +105,7 @@ public class ModestGame {
 				}
 			}
 
-			Console.outf("TPS: %s", TPS);
+			// Console.outf("TPS: %s", TPS);
 		}
 
 		if (saveLogs)
