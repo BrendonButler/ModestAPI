@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 public class Console extends Validator {
 
 	private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+	private static int maximumChars = 80;
 
 	public static String prompt() {
 		return prompt("> ");
@@ -49,12 +50,82 @@ public class Console extends Validator {
 		return prompt(String.format(prompt, regex));
 	}
 
+	public static void align(Alignment alignment, String string) {
+		align(alignment, string, ' ');
+	}
+
+	public static void align(Alignment alignment, String string, char divider) {
+		int remaining = maximumChars;
+		
+		if (!(string.length() >= maximumChars)) {
+			switch(alignment) {
+				case CENTER:
+					boolean extra = false;
+					remaining -= string.length();
+
+					if ((remaining % 2) != 0) {
+						remaining -= 1;
+						extra = true;
+					}
+
+					remaining /= 2;
+
+					while (remaining != 0) {
+						string = String.format("%s%s%s", divider, string, divider);
+						remaining -= 1;
+					}
+
+					if (extra) string += divider;
+
+					out(string);
+					break;
+				case LEFT:
+					remaining -= string.length();
+
+					if (divider != ' ') {
+						while (remaining != 0) {
+							string = String.format("%s%s", string, divider);
+							remaining -= 1;
+						}
+					}
+
+					out(string);
+					break;
+				case RIGHT:
+					remaining -= string.length();
+					
+					while (remaining != 0) {
+						string = String.format("%s%s", divider, string);
+						remaining -= 1;
+					}
+					
+					out(string);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
 	// TODO: need to find a better way of handling this
 	public static void clear() {
-			for (int tempInt = 1; tempInt < 50; tempInt++) {
-				outln();
-			}
+		for (int tempInt = 1; tempInt < 50; tempInt++) {
+			outln();
+		}
 	}
+
+	public static void fillLine(char character) {
+		int remaining = maximumChars;
+		String result = "";
+
+		while (remaining != 0) {
+			result = String.format("%s%s", result, character);
+			remaining -= 1;
+		}
+
+		out(result);
+	}
+
 
 	public static void out(String output) {
 		outf(output);
@@ -78,5 +149,9 @@ public class Console extends Validator {
 
 	public static void quit(int status) {
 		System.exit(status);
+	}
+
+	public static void setMaxChars(int maxChars) {
+		maximumChars = maxChars;
 	}
 }

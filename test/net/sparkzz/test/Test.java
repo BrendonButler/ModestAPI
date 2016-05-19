@@ -1,6 +1,8 @@
 package net.sparkzz.test;
 
 import net.sparkzz.modest.ModestGame;
+import net.sparkzz.modest.io.console.Alignment;
+import net.sparkzz.modest.io.console.Console;
 import net.sparkzz.modest.utils.Logger;
 
 /**
@@ -20,6 +22,10 @@ public class Test extends ModestGame {
 
 	@Override
 	public void postInit() {
-		System.out.println("Working!");
+		Console.out("Working!");
+
+		Console.fillLine('=');
+		Console.align(Alignment.CENTER, "ModestAPI");
+		Console.fillLine('=');
 	}
 }
