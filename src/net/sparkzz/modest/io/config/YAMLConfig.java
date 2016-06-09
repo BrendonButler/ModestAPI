@@ -1,5 +1,6 @@
 package net.sparkzz.modest.io.config;
 
+import net.sparkzz.modest.ModestGame;
 import net.sparkzz.modest.io.FileManager;
 import net.sparkzz.modest.utils.Validate;
 import org.yaml.snakeyaml.DumperOptions;
@@ -7,6 +8,7 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.representer.Representer;
 
 import java.io.File;
+import java.io.FileReader;
 import java.nio.charset.Charset;
 import java.util.*;
 
@@ -20,6 +22,7 @@ public class YAMLConfig extends Validate implements Config {
 
 	private DumperOptions dumperOptions;
 	private File configLocation;
+	private FileReader reader;
 	private Map<String, Object> data;
 	private Object tempObject;
 	private Representer representer;
@@ -28,7 +31,7 @@ public class YAMLConfig extends Validate implements Config {
 
 	public YAMLConfig() {
 		configLocation = new File(System.getProperty("user.dir") + "/data");
-		fileName = "config";
+		fileName = "config.yaml";
 
 		setupDumper();
 
@@ -38,7 +41,7 @@ public class YAMLConfig extends Validate implements Config {
 
 	public YAMLConfig(File folder, String fileName) {
 		configLocation = folder;
-		this.fileName = fileName;
+		this.fileName = fileName + ".yaml";
 
 		setupDumper();
 
@@ -244,7 +247,15 @@ public class YAMLConfig extends Validate implements Config {
 	}
 
 	public void load() {
-		data = FileManager.readYAML(new File(configLocation + "/config.yaml"), yaml);
+		reader = FileManager.read(new File(configLocation + "/" + fileName));
+
+		if (!Validate.notNull(reader)) {
+			ModestGame.getDefaultLogger().warnf("%s file could not be found", fileName);
+			data = Collections.synchronizedMap(new HashMap<String, Object>());
+			return;
+		}
+
+		data = Collections.synchronizedMap((Map<String, Object>) yaml.load(reader));
 	}
 
 	public void reload() {

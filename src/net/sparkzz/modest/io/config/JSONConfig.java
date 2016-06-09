@@ -1,10 +1,15 @@
 package net.sparkzz.modest.io.config;
 
+import net.sparkzz.modest.ModestGame;
 import net.sparkzz.modest.io.FileManager;
 import net.sparkzz.modest.utils.Validate;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -15,21 +20,23 @@ import java.util.*;
  */
 public class JSONConfig extends Validate implements Config {
 
+	private static final JSONParser parser = new JSONParser();
 	private File configLocation;
+	private FileReader reader;
 	private JSONObject data;
 	private Object tempObject;
 	private String fileName;
 
 	public JSONConfig() {
 		configLocation = new File(System.getProperty("user.dir") + "/data");
-		fileName = "config";
-		data = new JSONObject();
+		fileName = "config.json";
+		load();
 	}
 
 	public JSONConfig(File folder, String fileName) {
 		configLocation = folder;
-		this.fileName = fileName;
-		data = new JSONObject();
+		this.fileName = fileName + ".json";
+		load();
 	}
 
 	public boolean contains(String key) {
@@ -219,7 +226,19 @@ public class JSONConfig extends Validate implements Config {
 	}
 
 	public void load() {
-		data = FileManager.readJSON(new File(configLocation + "/" + fileName + ".json"));
+		try {
+			reader = FileManager.read(new File(configLocation + "/" + fileName));
+
+			if (!Validate.notNull(reader)) {
+				ModestGame.getDefaultLogger().warnf("%s file could not be found", fileName);
+				data = new JSONObject();
+				return;
+			}
+
+			data = (JSONObject) parser.parse(reader);
+		} catch (IOException | ParseException exception) {
+			exception.printStackTrace();
+		}
 	}
 
 	public void reload() {
@@ -228,6 +247,6 @@ public class JSONConfig extends Validate implements Config {
 	}
 
 	public void save() {
-		FileManager.write(configLocation, fileName, data);
+		FileManager.write(configLocation, fileName, data.toJSONString());
 	}
 }

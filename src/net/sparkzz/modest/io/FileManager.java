@@ -2,13 +2,13 @@ package net.sparkzz.modest.io;
 
 import net.sparkzz.modest.ModestGame;
 import net.sparkzz.modest.utils.Logger;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.yaml.snakeyaml.Yaml;
+import net.sparkzz.modest.utils.Validate;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * <p>File Manager, deals with IO of files.</p>
@@ -18,24 +18,19 @@ import java.util.*;
  */
 public class FileManager {
 
-	private static final JSONParser parser = new JSONParser();
 	private static final Logger log = ModestGame.getDefaultLogger();
 	private static File file;
 	private static FileWriter writer;
 	private static List<String> logCache = Collections.synchronizedList(new ArrayList<String>());
 
-	public static JSONObject readJSON(File file) {
+	public static FileReader read(File file) {
 		try {
-			if (!file.exists()) {
-				log.warn("JSON configuration file doesn't exist!");
-				return new JSONObject();
-			}
+			if (!file.exists())
+				return null;
 
-			return (JSONObject) parser.parse(new FileReader(file));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ParseException e) {
-			e.printStackTrace();
+			return new FileReader(file);
+		} catch (FileNotFoundException exception) {
+			exception.printStackTrace();
 		}
 		return null;
 	}
@@ -44,35 +39,19 @@ public class FileManager {
 		return logCache;
 	}
 
-	public static List<String> readTXT(File file) {
+	public static List<String> readByLine(File file) {
         List<String> tempList = Collections.synchronizedList(new ArrayList<String>());
         Scanner scanner;
+
 		try {
 			scanner = new Scanner(file);
 
-			while (scanner.hasNextLine()) {
+			while (scanner.hasNextLine())
 				tempList.add(scanner.nextLine());
-			}
-
-			return tempList;
 		} catch (FileNotFoundException exception) {
 			exception.printStackTrace();
 		}
-		return null;
-	}
-
-	public static Map<String, Object> readYAML(File file, Yaml yaml) {
-		try {
-			if (!file.exists()) {
-				log.warn("YAML configuration file doesn't exist");
-				return null;
-			}
-
-			return Collections.synchronizedMap((Map < String, Object >) yaml.load(new FileReader(file)));
-		} catch (FileNotFoundException exception) {
-			exception.printStackTrace();
-		}
-		return null;
+		return tempList;
 	}
 
 	public static void addToLogCache(String message) {
@@ -80,43 +59,24 @@ public class FileManager {
 	}
 
 	public static void saveLog() {
+		List<String> data = log.getData();
 
-		List<String> data;
-		data = log.getData();
-
-		if (data != null) {
-			try {
-				file = new File(System.getProperty("user.dir") + "/data/log.txt");
-
-				if (!file.exists())
-					file.createNewFile();
-
-				writer = new FileWriter(file);
-
-				for (String line : data)
-					writer.write(line);
-
-				writer.flush();
-				writer.close();
-			} catch (IOException exception) {
-				exception.printStackTrace();
-			}
-		}
+		if (Validate.notNull(data))
+			write(new File(System.getProperty("user.dir") + "/data"), "log.txt", data);
 	}
 
-	public static void write(File folder, String fileName, JSONObject object) {
+	public static void write(File folder, String fileName, List<?> output) {
 		try {
-			if (!folder.exists())
-				folder.mkdir();
-
-			file = new File(folder, fileName + ".json");
+			file = new File(folder, fileName);
 
 			if (!file.exists())
 				file.createNewFile();
 
 			writer = new FileWriter(file);
 
-			writer.write(object.toJSONString());
+			for (Object line : output)
+				writer.write(line.toString());
+
 			writer.flush();
 			writer.close();
 		} catch (IOException exception) {
@@ -124,19 +84,19 @@ public class FileManager {
 		}
 	}
 
-	public static void write(File folder, String fileName, String string) {
+	public static void write(File folder, String fileName, String output) {
 		try {
 			if (!folder.exists())
 				folder.mkdir();
 
-			file = new File(folder, fileName + ".yaml");
+			file = new File(folder, fileName);
 
 			if (!file.exists())
 				file.createNewFile();
 
 			writer = new FileWriter(file);
 
-			writer.write(string);
+			writer.write(output);
 			writer.flush();
 			writer.close();
 		} catch (IOException exception) {

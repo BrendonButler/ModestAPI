@@ -1,10 +1,16 @@
 package net.sparkzz.test;
 
 import net.sparkzz.modest.ModestGame;
+import net.sparkzz.modest.io.config.Config;
+import net.sparkzz.modest.io.config.JSONConfig;
+import net.sparkzz.modest.io.config.YAMLConfig;
 import net.sparkzz.modest.io.console.Alignment;
 import net.sparkzz.modest.io.console.Console;
 import net.sparkzz.modest.utils.Logger;
 import net.sparkzz.modest.utils.Math;
+
+import java.io.File;
+import java.util.Random;
 
 /**
  * Created by Brendon Butler on 3/28/2016.
@@ -28,15 +34,20 @@ public class Test extends ModestGame {
 
 	@Override
 	public void postInit() {
-		Console.out("Working!");
+		Config jsonConfig = new JSONConfig(new File(System.getProperty("user.dir") + "/data"), "conflig");
+		Config yamlConfig = new YAMLConfig();
 
-		Console.fillLine('=');
-		Console.align(Alignment.CENTER, "ModestAPI");
-		Console.fillLine('=');
+		Console.outf("JSON Config: %s", jsonConfig.get("test"));
+		Console.outf("Yaml Config: %s", yamlConfig.get("test"));
 
-		int i = 0, j = 15;
-		Console.outf("GCM (Input %s & %s): %s, %s", i, j, i/Math.gcm(i, j), j/Math.gcm(i, j));
+		Random rand = new Random();
 
-		interrupt();
+		jsonConfig.set("test", rand.nextInt(100));
+		yamlConfig.set("test", rand.nextLong());
+
+		jsonConfig.save();
+		yamlConfig.save();
+
+		saveLogs();
 	}
 }
