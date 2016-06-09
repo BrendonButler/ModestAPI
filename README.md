@@ -2,7 +2,7 @@ ModestAPI
 =
 A simplistic, yet powerful API made to drive console based games and applications. ModestAPI is still in early development so there may be bugs that need to be sorted out and features to be implemented.
 
-When the API is in a state where it has enough potential, without any sub-projects half started and without any obvious bugs. A *stable version* if you will -- I will deem it as worthy of being published. (should only be on major and minor versions - revision and build versions shouldn't be published unless absolutely necessary),
+Release version 1.0
 
 Installation
 -
