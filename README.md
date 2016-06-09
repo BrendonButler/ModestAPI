@@ -6,7 +6,7 @@ When the API is in a state where it has enough potential, without any sub-projec
 
 Installation
 -
-If you are **not** using framework support, you can download the jar file, [here](http://dl.sparkzz.net/java/modest/ModestAPI.jar).<br>
+If you are **not** using framework support, you can download the jar file, [here](http://dl.sparkzz.net/java/modest/modestapi.jar).<br>
 If you are using framework support, you can view the dependencies, [here](http://repo.sparkzz.net/modestapi/dependency-info.html):
 
 **Maven**
