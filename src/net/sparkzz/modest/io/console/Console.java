@@ -1,16 +1,18 @@
 package net.sparkzz.modest.io.console;
 
-import net.sparkzz.modest.utils.Validator;
+import net.sparkzz.modest.utils.Validate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * <p>Console Controller</p>
+ *
  * @author Brendon Butler
  * @since  0.1.1
  */
-public class Console extends Validator {
+public class Console extends Validate {
 
 	private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static int maximumChars = 80;
@@ -109,9 +111,8 @@ public class Console extends Validator {
 
 	// TODO: need to find a better way of handling this
 	public static void clear() {
-		for (int tempInt = 1; tempInt < 50; tempInt++) {
+		for (int tempInt = 1; tempInt < 50; tempInt++)
 			outln();
-		}
 	}
 
 	public static void fillLine(char character) {

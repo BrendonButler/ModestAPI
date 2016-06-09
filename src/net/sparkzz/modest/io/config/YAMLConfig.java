@@ -1,7 +1,7 @@
 package net.sparkzz.modest.io.config;
 
 import net.sparkzz.modest.io.FileManager;
-import net.sparkzz.modest.utils.Validator;
+import net.sparkzz.modest.utils.Validate;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.representer.Representer;
@@ -11,10 +11,12 @@ import java.nio.charset.Charset;
 import java.util.*;
 
 /**
+ * <p>Yaml Configuration</p>
+ *
  * @author Brendon Butler
  * @since  0.1
  */
-public class YAMLConfig extends Validator implements Config {
+public class YAMLConfig extends Validate implements Config {
 
 	private DumperOptions dumperOptions;
 	private File configLocation;
