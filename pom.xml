@@ -7,29 +7,40 @@
     <groupId>net.sparkzz</groupId>
     <artifactId>ModestAPI</artifactId>
 	<!-- [Major.Minor.Revision.Build] -->
-    <version>0.1.3.14</version>
+    <version>1.0.0.4</version>
 	<packaging>jar</packaging>
 
 	<name>ModestAPI</name>
 	<description>Simple API for text based games</description>
 	<url>http://modest.sparkzz.net/</url>
 
-	<developers>
-		<developer>
-			<id>brendon</id>
-			<name>Brendon Butler</name>
-			<email>contact@sparkzz.net</email>
-			<roles>
-				<role>owner</role>
-				<role>developer</role>
-			</roles>
-			<timezone>-5</timezone>
-		</developer>
-	</developers>
-
 	<scm>
 		<url>https://github.com/BrendonButler/ModestAPI.git</url>
 	</scm>
+
+	<developers>
+		<developer>
+			<name>Brendon Butler</name>
+			<email>contact@sparkzz.net</email>
+			<roles>
+				<role>Owner</role>
+				<role>Developer</role>
+			</roles>
+			<properties>
+				<picUrl>http://sparkzz.net/img/brendon.jpg</picUrl>
+			</properties>
+		</developer>
+	</developers>
+
+	<contributors>
+		<contributor>
+			<name>Kaleb Haslam</name>
+			<email>kalebmarc@hotmail.com</email>
+			<properties>
+				<picUrl>https://avatars3.githubusercontent.com/u/9996803</picUrl>
+			</properties>
+		</contributor>
+	</contributors>
 
 	<licenses>
 		<license>
@@ -61,6 +72,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
 					<fork>true</fork>
 					<executable>C:\Program Files\Java\jdk8\bin\javac.exe</executable>
 				</configuration>

@@ -1,17 +1,19 @@
 package net.sparkzz.modest.io.config;
 
 import net.sparkzz.modest.io.FileManager;
-import net.sparkzz.modest.utils.Validator;
+import net.sparkzz.modest.utils.Validate;
 import org.json.simple.JSONObject;
 
 import java.io.File;
 import java.util.*;
 
 /**
+ * <p>JSon Configuration</p>
+ *
  * @author Brendon Butler
  * @since  0.1
  */
-public class JSONConfig extends Validator implements Config {
+public class JSONConfig extends Validate implements Config {
 
 	private File configLocation;
 	private JSONObject data;

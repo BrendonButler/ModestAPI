@@ -17,82 +17,111 @@ import java.util.List;
 public class ModestGame {
 
 	/**
-	 * <p>Current ticks per second</p>
+	 * <p>Tells the run loop whether to initialize again or not.</p>
 	 */
-	private int TPS;
+	private static boolean runOnce = false;
 
 	/**
-	 * <p>Next update time</p>
+	 * <p>Maximum ticks per second (TPS) for the run loop.</p>
 	 */
-	private long nextTime;
+	private static int maxTicks = 10;
 
 	/**
-	 * <p>Default logger, should only be accessed by API classes</p>
-	 *
-	 * @return {@link Logger}
-	 */
-	public static Logger getDefaultLogger() {
-		return modestLogger;
-	}
-
-	/**
-	 * <p>Default logger at the API level</p>
-	 * <p>New logger should be created</p>
+	 * <p>Default logger at the API level.</p>
+	 * <p>New logger should be created.</p>
 	 */
 	private static Logger modestLogger = new Logger("ModestAPI");
 
 	/**
+	 * <p>Has the program initialized?</p>
+	 */
+	private boolean hasInitialized = false;
+
+	/**
+	 * <p>Variable that indicates whether or not the program is running.</p>
+	 */
+	private boolean running = true;
+
+	/**
+	 * <p>Variable that indicates whether or not to save logs.</p>
+	 */
+	private boolean saveLogs = true;
+
+	/**
+	 * <p>Current ticks per second.</p>
+	 */
+	private int TPS;
+
+	/**
 	 * <p>Logger cache</p>
-	 * <p>every time something is logged, it should be put into this cache</p
+	 * <p>every time something is logged, it should be put into this cache.</p>
 	 */
 	private List<String> logCache;
 
 	/**
-	 * <p>Variable that indicates whether or not the program is running</p>
+	 * <p>Next update time.</p>
 	 */
-	public boolean running = true;
+	private long nextTime;
 
 	/**
-	 * <p>Variable that indicates whether or not to save logs</p>
-	 */
-	public boolean saveLogs = true;
-
-	/**
-	 * <p>Maximum ticks per second (TPS) for the run loop</p>
-	 */
-	private int maxTicks = 10;
-
-	/**
-	 * <p>Can be overwritten to return sub-class logger</p>
+	 * <p>Sets the program to run the {@code init()} method only once.</p>
 	 *
-	 * @return {@link Logger}
+	 * @param value Input {@link Boolean}.
 	 */
-	public Logger getLogger() {
+	protected static void runOnce(boolean value) {
+		runOnce = value;
+	}
+
+	/**
+	 * <p>This will set the max ticks of the program (default 10).</p>
+	 *
+	 * @param ticks Input {@link Integer}.
+	 */
+	protected static void setTicks(int ticks) {
+		maxTicks = ticks;
+	}
+
+	/**
+	 * <p>Can be overwritten to return sub-class logger.</p>
+	 *
+	 * @return {@link Logger}.
+	 */
+	protected Logger getLogger() {
 		return null;
 	}
 
 	/**
-	 * <p>To be run after initial setup is complete</p>
-	 * <p>Will automatically be called unless the {@code run()} method is overridden</p>
+	 * <p>To be run after initial setup is complete.</p>
+	 * <p>Will automatically be called unless the {@code run()} method is overridden.</p>
 	 */
-	public void postInit() {
+	protected void postInit() {
 		Console.out("Running");
 	}
 
 	/**
-	 * <p>The initial setup of the program</p>
-	 * <p>Will be automatically called unless the {@code run()} method is overridden</p>
+	 * <p>The initial setup of the program.</p>
+	 * <p>Will be automatically called unless the {@code run()} method is overridden.</p>
 	 */
-	public void init() {
+	protected void init() {
 
 	}
 
 	/**
-	 * <p>This will continuously loop the {@code postInit()} method</p>
-	 * <p>This method doesn't need to be accessed/overrode for programs that don't need a run loop</p>
+	 * <p>This will halt the run loop.</p>
 	 */
-	public void run() {
-		init();
+	protected void interrupt() {
+		running = false;
+	}
+
+	/**
+	 * <p>This will continuously loop the {@code postInit()} method.</p>
+	 * <p>This method doesn't need to be accessed/overrode for programs that don't need a run loop.</p>
+	 */
+	protected void run() {
+		if (!(runOnce && hasInitialized))
+			init();
+
+		hasInitialized = true;
 
 		while (running) {
 			TPS = 0;
@@ -113,9 +142,18 @@ public class ModestGame {
 	}
 
 	/**
-	 * <p>This will save all the logs to a file, overwrites at close</p>
+	 * <p>This will save all the logs to a file, overwrites at close.</p>
 	 */
-	public void saveLogs() {
+	protected void saveLogs() {
 		FileManager.saveLog();
+	}
+
+	/**
+	 * <p>Default logger, should only be accessed by API classes.</p>
+	 *
+	 * @return The default (API Level) {@link Logger}.
+	 */
+	public static Logger getDefaultLogger() {
+		return modestLogger;
 	}
 }

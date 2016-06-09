@@ -11,6 +11,8 @@ import java.io.*;
 import java.util.*;
 
 /**
+ * <p>File Manager, deals with IO of files.</p>
+ *
  * @author Brendon Butler
  * @since  0.1
  */
