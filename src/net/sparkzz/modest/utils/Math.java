@@ -23,7 +23,7 @@ public class Math {
 				return i;
 			i--;
 		}
-		return -1;
+		return 1;
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class Math {
 	 * @return Least {@link Integer} that can be divided by both inputs and be a whole number.
 	 */
 	public static Integer lcm(int first, int second) {
-		if (first == 1 && second != 0 || second == 1 && first != 0)
+		if (first == 0 || first == 1 || second == 0 || second == 1)
 			return 1;
 
 		for (int i = 2; i <= first && i <= second; i++) {

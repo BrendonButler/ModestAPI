@@ -7,7 +7,7 @@
     <groupId>net.sparkzz</groupId>
     <artifactId>ModestAPI</artifactId>
 	<!-- [Major.Minor.Revision.Build] -->
-    <version>1.1.0.5</version>
+    <version>1.1.1.6</version>
 	<packaging>jar</packaging>
 
 	<name>ModestAPI</name>
