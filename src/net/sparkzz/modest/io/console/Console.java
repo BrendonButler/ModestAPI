@@ -1,5 +1,6 @@
 package net.sparkzz.modest.io.console;
 
+import net.sparkzz.modest.utils.Languages;
 import net.sparkzz.modest.utils.Validate;
 
 import java.io.BufferedReader;
@@ -12,7 +13,7 @@ import java.io.InputStreamReader;
  * @author Brendon Butler
  * @since  0.1.1
  */
-public class Console extends Validate {
+public class Console extends Languages {
 
 	private static final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	private static int maximumChars = 80;
@@ -23,10 +24,11 @@ public class Console extends Validate {
 
 	public static String prompt(String prompt) {
 		String tempString;
+		prompt = localize(prompt);
 
 		if (!notNull(prompt))
 			System.out.println();
-		else System.out.printf(prompt);
+		else Console.out(prompt);
 
 		tempString = null;
 
@@ -49,11 +51,11 @@ public class Console extends Validate {
 	}
 
 	public static String promptf(String prompt, Object regex) {
-		return prompt(String.format(prompt, regex));
+		return prompt(localize(String.format(prompt, regex)));
 	}
 
 	public static void align(Alignment alignment, String string) {
-		align(alignment, string, ' ');
+		align(alignment, localize(string), ' ');
 	}
 
 	public static void align(Alignment alignment, String string, char divider) {
@@ -73,7 +75,7 @@ public class Console extends Validate {
 					remaining /= 2;
 
 					while (remaining != 0) {
-						string = String.format("%s%s%s", divider, string, divider);
+						string = String.format("%s%s%s", divider, localize(string), divider);
 						remaining -= 1;
 					}
 
@@ -86,7 +88,7 @@ public class Console extends Validate {
 
 					if (divider != ' ') {
 						while (remaining != 0) {
-							string = String.format("%s%s", string, divider);
+							string = String.format("%s%s", localize(string), divider);
 							remaining -= 1;
 						}
 					}
@@ -97,7 +99,7 @@ public class Console extends Validate {
 					remaining -= string.length();
 					
 					while (remaining != 0) {
-						string = String.format("%s%s", divider, string);
+						string = String.format("%s%s", divider, localize(string));
 						remaining -= 1;
 					}
 					
@@ -129,19 +131,19 @@ public class Console extends Validate {
 
 
 	public static void out(String output) {
-		outf(output);
+		outf(localize(output));
 	}
 
 	public static void outf(String output, Object... regex) {
-		System.out.println((String.format(output, regex)));
+		System.out.println(localize(String.format(output, regex)));
 	}
 
 	public static void outln() {
-		System.out.println();
+		outln("");
 	}
 
 	public static void outln(String output) {
-		System.out.println(output);
+		System.out.println(localize(output));
 	}
 
 	public static void quit() {

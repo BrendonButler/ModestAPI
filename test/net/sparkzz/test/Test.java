@@ -6,10 +6,13 @@ import net.sparkzz.modest.io.config.JSONConfig;
 import net.sparkzz.modest.io.config.YAMLConfig;
 import net.sparkzz.modest.io.console.Alignment;
 import net.sparkzz.modest.io.console.Console;
+import net.sparkzz.modest.utils.Languages;
 import net.sparkzz.modest.utils.Logger;
 import net.sparkzz.modest.utils.Math;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -34,20 +37,28 @@ public class Test extends ModestGame {
 
 	@Override
 	public void postInit() {
-		Config jsonConfig = new JSONConfig(new File(System.getProperty("user.dir") + "/data"), "conflig");
-		Config yamlConfig = new YAMLConfig();
+		List<String> regex = new ArrayList<>();
+		List<String> afrikaans = new ArrayList<>();
+		List<String> spanish = new ArrayList<>();
 
-		Console.outf("JSON Config: %s", jsonConfig.get("test"));
-		Console.outf("Yaml Config: %s", yamlConfig.get("test"));
+		regex.add("Title");
+		afrikaans.add("Titel");
+		spanish.add("Título");
+		regex.add("Copyright 2016 Jimmy Jones.");
+		afrikaans.add("Kopiereg 2016 Jimmy Jones.");
+		spanish.add("Derechos de autor 2016 Jimmy Jones.");
 
-		Random rand = new Random();
+		Languages.addLanguage("af_za", regex, afrikaans);
+		Languages.addLanguage("es_mx", regex, spanish);
+		Languages.setLanguage("es_mx");
 
-		jsonConfig.set("test", rand.nextInt(100));
-		yamlConfig.set("test", rand.nextLong());
+		Console.out("Title");
+		Console.out("Copyright 2016 Jimmy Jones.");
 
-		jsonConfig.save();
-		yamlConfig.save();
+		Languages.setLanguage("");
 
-		saveLogs();
+		Console.out("Title, Copyright 2016 Jimmy Jones.");
+
+		interrupt();
 	}
 }
