@@ -59,6 +59,13 @@ public class Test extends ModestGame {
 
 		Console.out("Title, Copyright 2016 Jimmy Jones.");
 
+		Config config = new JSONConfig();
+
+		config.set("testing", 23);
+		config.set("words", "these are words!");
+
+		config.save();
+
 		interrupt();
 	}
 }

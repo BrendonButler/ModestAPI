@@ -1,11 +1,13 @@
 package net.sparkzz.modest.io.config;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 import net.sparkzz.modest.ModestGame;
 import net.sparkzz.modest.io.FileManager;
 import net.sparkzz.modest.utils.Validate;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,10 +22,10 @@ import java.util.*;
  */
 public class JSONConfig extends Validate implements Config {
 
-	private static final JSONParser parser = new JSONParser();
 	private File configLocation;
-	private FileReader reader;
-	private JSONObject data;
+	private JsonReader reader;
+	private Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	private Map<String, Object> data;
 	private Object tempObject;
 	private String fileName;
 
@@ -227,16 +229,16 @@ public class JSONConfig extends Validate implements Config {
 
 	public void load() {
 		try {
-			reader = FileManager.read(new File(configLocation + "/" + fileName));
+			reader = new JsonReader(new FileReader(new File(configLocation + "/" + fileName)));
 
 			if (!Validate.notNull(reader)) {
 				ModestGame.getDefaultLogger().warnf("%s file could not be found", fileName);
-				data = new JSONObject();
+				data = new HashMap<>();
 				return;
 			}
 
-			data = (JSONObject) parser.parse(reader);
-		} catch (IOException | ParseException exception) {
+			data = gson.fromJson(reader, new TypeToken<Map<String, Object>>(){}.getType());
+		} catch (IOException exception) {
 			exception.printStackTrace();
 		}
 	}
@@ -247,6 +249,6 @@ public class JSONConfig extends Validate implements Config {
 	}
 
 	public void save() {
-		FileManager.write(configLocation, fileName, data.toJSONString());
+		FileManager.write(configLocation, fileName, gson.toJson(data));
 	}
 }
