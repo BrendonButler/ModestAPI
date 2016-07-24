@@ -207,7 +207,7 @@ public class YAMLConfig extends Validate implements Config {
 	public Set<String> getKeys() {
 		if (!isEmpty())
 			return data.keySet();
-		return new HashSet<String>();
+		return new HashSet<>();
 	}
 
 	public short getShort(String key) {

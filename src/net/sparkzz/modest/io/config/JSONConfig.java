@@ -2,10 +2,8 @@ package net.sparkzz.modest.io.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import net.sparkzz.modest.ModestGame;
 import net.sparkzz.modest.io.FileManager;
 import net.sparkzz.modest.utils.Validate;
 
@@ -234,13 +232,6 @@ public class JSONConfig extends Validate implements Config {
 	public void load() {
 		try {
 			reader = new JsonReader(new FileReader(new File(configLocation + "/" + fileName)));
-
-			if (!Validate.notNull(reader)) {
-				ModestGame.getDefaultLogger().warnf("%s file could not be found", fileName);
-				data = new HashMap<>();
-				return;
-			}
-
 			data = gson.fromJson(reader, new TypeToken<Map<String, Object>>(){}.getType());
 		} catch (IOException exception) {
 			exception.printStackTrace();
