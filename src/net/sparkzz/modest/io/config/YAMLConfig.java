@@ -49,7 +49,7 @@ public class YAMLConfig extends Validate implements Config {
 
 		setupDumper();
 
-		yaml = new Yaml();
+		yaml = new Yaml(representer, dumperOptions);
 		load();
 	}
 
