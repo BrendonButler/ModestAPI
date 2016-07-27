@@ -27,10 +27,6 @@ public class JSONConfig extends Validate implements Config {
 	private Object tempObject;
 	private String fileName;
 
-	public Map<String, Object> getData() {
-		return null;
-	}
-
 	public JSONConfig() {
 		configLocation = new File(System.getProperty("user.dir") + "/data");
 		fileName = "config.json";

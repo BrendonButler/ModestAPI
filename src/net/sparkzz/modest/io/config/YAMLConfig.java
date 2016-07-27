@@ -29,10 +29,6 @@ public class YAMLConfig extends Validate implements Config {
 	private String fileName;
 	private Yaml yaml;
 
-	public Map<String, Object> getData() {
-		return data;
-	}
-
 	public YAMLConfig() {
 		configLocation = new File(System.getProperty("user.dir") + "/data");
 		fileName = "config.yaml";
