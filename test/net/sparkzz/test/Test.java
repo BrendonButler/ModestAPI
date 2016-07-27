@@ -13,6 +13,7 @@ import net.sparkzz.modest.utils.Math;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -37,37 +38,15 @@ public class Test extends ModestGame {
 
 	@Override
 	public void postInit() {
-		List<String> regex = new ArrayList<>();
-		List<String> afrikaans = new ArrayList<>();
-		List<String> spanish = new ArrayList<>();
-
-		regex.add("Title");
-		afrikaans.add("Titel");
-		spanish.add("Título");
-		regex.add("Copyright 2016 Jimmy Jones.");
-		afrikaans.add("Kopiereg 2016 Jimmy Jones.");
-		spanish.add("Derechos de autor 2016 Jimmy Jones.");
-
-		Languages.addLanguage("af_za", regex, afrikaans);
-		Languages.addLanguage("es_mx", regex, spanish);
-		Languages.setLanguage("es_mx");
-
-		Console.out("Title");
-		Console.out("Copyright 2016 Jimmy Jones.");
-
-		Languages.setLanguage("");
-
-		Console.out("Title, Copyright 2016 Jimmy Jones.");
-
-		Config config = new JSONConfig();
+		Config config = new YAMLConfig();
 
 		config.load();
 
-		Console.out("" + config.getInteger("testing"));
-		Console.out(config.getString("words"));
+		Console.out(config.getString("testing.whereAreYouFrom"));
 
-		config.set("testing", 23);
-		config.set("words", "these are words!");
+		config.set("this.is.a.test-a-rooni", "Hello World! This is ballin'");
+
+		Console.out(config.getString("this.is.a.test-a-rooni"));
 
 		config.save();
 

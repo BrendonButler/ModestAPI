@@ -188,4 +188,6 @@ public interface Config {
 	 * <p>Saves configuration to file.</p>
 	 */
 	void save();
+
+	Map<String, Object> getData();
 }
