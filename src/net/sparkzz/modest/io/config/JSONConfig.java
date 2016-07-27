@@ -178,8 +178,30 @@ public class JSONConfig extends Validate implements Config {
 	}
 
 	public Object get(String key) {
-		if (isEmpty() || !contains(key) || (contains(key) && !hasValue(key)))
+		if (isEmpty())
 			return null;
+
+		if (key.contains(".")) {
+			String[] nodes = key.split("\\.");
+			Map currParent;
+
+			if (data.containsKey(nodes[0]) && (data.get(nodes[0]) instanceof Map))
+				currParent = (Map) data.get(nodes[0]);
+			else return null;
+
+			if (nodes.length > 1) {
+				for (int i = 1; i < nodes.length - 1; i++) {
+					if (currParent.containsKey(nodes[i]) && (currParent.get(nodes[i]) instanceof Map))
+						currParent = (Map) currParent.get(nodes[i]);
+					else return null;
+				}
+
+				if (currParent.containsKey(nodes[nodes.length - 1]))
+					return currParent.get(nodes[nodes.length - 1]);
+			}
+		} else if (!contains(key) || (contains(key) && !hasValue(key)))
+			return null;
+
 		return data.get(key);
 	}
 
@@ -229,6 +251,55 @@ public class JSONConfig extends Validate implements Config {
 	public void set(String key, Object object) {
 		if (!exists())
 			return;
+
+		if (key.contains(".")) {
+			String[] nodes = key.split("\\.");
+
+			// if data doesn't contain top-level node, create nested Maps
+			if (!data.containsKey(nodes[0])) {
+				Map<String, Object> currParent = new HashMap<>(), prevParent;
+				currParent.put(nodes[nodes.length - 1], object);
+
+				for (int i = nodes.length - 2; i > 0; i--) {
+					prevParent = currParent;
+
+					currParent = new HashMap<>();
+					currParent.put(nodes[i], prevParent);
+				}
+
+				data.put(nodes[0], currParent);
+				return;
+			}
+
+			// if data contains top-level node, work through each Map
+			if (data.containsKey(nodes[0])) {
+				Map<String, Object> currParent, prevParent;
+
+				if (data.containsKey(nodes[0]) && (data.get(nodes[0]) instanceof Map))
+					currParent = (Map) data.get(nodes[0]);
+				else return;
+
+				if (nodes.length > 1) {
+					for (int i = 1; i < nodes.length - 1; i++) {
+						if (currParent.containsKey(nodes[i]) && (currParent.get(nodes[i]) instanceof Map))
+							currParent = (Map) currParent.get(nodes[i]);
+						else return;
+					}
+
+					currParent.put(nodes[nodes.length - 1], object);
+
+					for (int i = nodes.length - 2; i > 0; i--) {
+						prevParent = currParent;
+
+						currParent = new HashMap<>();
+						currParent.put(nodes[i], prevParent);
+					}
+
+					data.put(nodes[0], currParent);
+					return;
+				}
+			}
+		}
 
 		data.put(key, object);
 	}

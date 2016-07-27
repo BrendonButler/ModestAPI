@@ -23,9 +23,7 @@ public class YAMLConfig extends Validate implements Config {
 	private DumperOptions dumperOptions;
 	private File configLocation;
 	private FileReader reader;
-	private List<String> parents;
 	private Map<String, Object> data;
-	private Map<String, String> children;
 	private Object tempObject;
 	private Representer representer;
 	private String fileName;
@@ -202,7 +200,7 @@ public class YAMLConfig extends Validate implements Config {
 
 		if (key.contains(".")) {
 			String[] nodes = key.split("\\.");
-			Map currParent;
+			Map<String, Object> currParent;
 
 			if (data.containsKey(nodes[0]) && (data.get(nodes[0]) instanceof Map))
 				currParent = (Map) data.get(nodes[0]);
@@ -222,12 +220,6 @@ public class YAMLConfig extends Validate implements Config {
 			return null;
 
 		return data.get(key);
-	}
-
-	public String getParent(String key) {
-		if (children.containsKey(key))
-			return children.get(key);
-		return null;
 	}
 
 	public Set<?> getSet(String key) {
@@ -283,7 +275,7 @@ public class YAMLConfig extends Validate implements Config {
 
 			// if data doesn't contain top-level node, create nested Maps
 			if (!data.containsKey(nodes[0])) {
-				Map currParent = new HashMap<>(), prevParent;
+				Map<String, Object> currParent = new HashMap<>(), prevParent;
 				currParent.put(nodes[nodes.length - 1], object);
 
 				for (int i = nodes.length - 2; i > 0; i--) {

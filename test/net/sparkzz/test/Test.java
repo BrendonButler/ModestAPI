@@ -44,7 +44,8 @@ public class Test extends ModestGame {
 
 		Console.out(config.getString("testing.whereAreYouFrom"));
 
-		config.set("this.is.a.test-a-rooni", "Hello World! This is ballin'");
+		config.set("testing.times", 99);
+		config.set("this.is.a.test", "Hello World! This is ballin'");
 
 		Console.out(config.getString("this.is.a.test-a-rooni"));
 
