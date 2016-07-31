@@ -261,7 +261,6 @@ public class YAMLConfig extends Validate implements Config {
 		return null;
 	}
 
-	// TODO: clean this up
 	public void set(String key, Object object) {
 		if (!exists())
 			return;
@@ -271,50 +270,47 @@ public class YAMLConfig extends Validate implements Config {
 
 			// if data doesn't contain top-level node, create nested Maps
 			if (!data.containsKey(nodes[0])) {
-				Map<String, Object> currParent = new HashMap<>(), prevParent;
-				currParent.put(nodes[nodes.length - 1], object);
+				Map<String, Object> currNode = new HashMap<>(), prevNode;
+				currNode.put(nodes[nodes.length - 1], object);
 
 				for (int i = nodes.length - 2; i > 0; i--) {
-					prevParent = currParent;
+					prevNode = currNode;
 
-					currParent = new HashMap<>();
-					currParent.put(nodes[i], prevParent);
+					currNode = new HashMap<>();
+					currNode.put(nodes[i], prevNode);
+				}
+				// set top-level node to previous parent
+				data.put(nodes[0], currNode);
+			} else { // if data contains top-level node, work through each Map
+				Map currNode = new HashMap<>(), prevNode;
+				List<Map> prevNodes = new ArrayList<>();
+
+				if (data.containsKey(nodes[0])) {
+					if (data.get(nodes[0]) instanceof Map)
+						currNode = (Map) data.get(nodes[0]);
+					else return; // TODO: Add boolean for safety net (no overwriting)
 				}
 
-				data.put(nodes[0], currParent);
-				return;
-			}
-
-			// if data contains top-level node, work through each Map
-			if (data.containsKey(nodes[0])) {
-				Map currParent, prevParent;
-
-				if (data.containsKey(nodes[0]) && (data.get(nodes[0]) instanceof Map))
-					currParent = (Map) data.get(nodes[0]);
-				else return;
-
-				if (nodes.length > 1) {
-					for (int i = 1; i < nodes.length - 1; i++) {
-						if (currParent.containsKey(nodes[i]) && (currParent.get(nodes[i]) instanceof Map))
-							currParent = (Map) currParent.get(nodes[i]);
-						else return;
-					}
-
-					currParent.put(nodes[nodes.length - 1], object);
-
-					for (int i = nodes.length - 2; i > 0; i--) {
-						prevParent = currParent;
-
-						currParent = new HashMap<>();
-						currParent.put(nodes[i], prevParent);
-					}
-
-					data.put(nodes[0], currParent);
-					return;
+				for (int i = 0; i < nodes.length - 1; i++) {
+					if (data.containsKey(nodes[i])) {
+						if (data.get(nodes[i]) instanceof Map)
+							prevNodes.add(i, (Map) data.get(i));
+						else return; // TODO: Add boolean for safety net (no overwriting)
+					} else prevNodes.add(i, new HashMap<>());
 				}
+
+				currNode.put(nodes[nodes.length - 1], object);
+
+				for (int i = prevNodes.size() - 2; i > 0; i--) {
+					prevNode = currNode;
+
+					currNode = prevNodes.get(i);
+					currNode.put(nodes[i], prevNode);
+				}
+				data.put(nodes[0], currNode);
 			}
+			return;
 		}
-
 		data.put(key, object);
 	}
 
