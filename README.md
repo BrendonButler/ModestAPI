@@ -14,12 +14,12 @@ If you are using framework support, you can view the dependencies, [here](http:/
 <dependency>
   <groupId>net.sparkzz</groupId>
   <artifactId>ModestAPI</artifactId>
-  <version>0.1.3.14</version>
+  <version>1.0.0.4</version>
 </dependency>
 ```
 **Gradle/Grails**
 ```
-compile 'net.sparkzz:ModestAPI:0.1.3.14'
+compile 'net.sparkzz:ModestAPI:1.0.0.4'
 ```
 
 License
