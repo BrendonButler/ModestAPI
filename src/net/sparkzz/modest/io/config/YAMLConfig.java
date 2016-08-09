@@ -20,6 +20,7 @@ import java.util.*;
  */
 public class YAMLConfig extends Validate implements Config {
 
+	private boolean overwrite = false;
 	private DumperOptions dumperOptions;
 	private File configLocation;
 	private FileReader reader;
@@ -290,7 +291,11 @@ public class YAMLConfig extends Validate implements Config {
 							prevNodes[i] = new LinkedHashMap((Map) data.get(nodes[i]));
 						else if (!data.containsKey(nodes[i]))
 							prevNodes[i] = new LinkedHashMap();
-						else return; // TODO: Add protection boolean
+						else {
+							if (!overwrite) return;
+
+							prevNodes[i] = new LinkedHashMap();
+						}
 					}
 
 					prevNodes[prevNodes.length - 1].put(nodes[nodes.length - 1], object);
@@ -304,6 +309,10 @@ public class YAMLConfig extends Validate implements Config {
 			return;
 		}
 		data.put(key, object);
+	}
+
+	public void setProtection(boolean value) {
+		overwrite = value;
 	}
 
 	public void load() {
