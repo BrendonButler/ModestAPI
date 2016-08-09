@@ -1,7 +1,5 @@
 package net.sparkzz.modest.utils;
 
-import com.sun.deploy.util.StringUtils;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +26,7 @@ public class Languages extends Validate {
 
 		Map<String, String> regexMap = locales.get(activeLocale);
 
-		Pattern pattern = Pattern.compile("(" + StringUtils.join(regexMap.keySet(), "|") + ")");
+		Pattern pattern = Pattern.compile("(" + String.join("|", regexMap.keySet()) + ")");
 		Matcher matcher = pattern.matcher(input);
 
 		StringBuffer buffer = new StringBuffer();
