@@ -75,35 +75,35 @@ public class Console extends Languages {
 					remaining /= 2;
 
 					while (remaining != 0) {
-						string = String.format("%s%s%s%n", divider, localize(string), divider);
+						string = String.format("%s%s%s", divider, localize(string), divider);
 						remaining -= 1;
 					}
 
 					if (extra) string += divider;
 
-					out(string);
+					outln(string);
 					break;
 				case LEFT:
 					remaining -= string.length();
 
 					if (divider != ' ') {
 						while (remaining != 0) {
-							string = String.format("%s%s%n", localize(string), divider);
+							string = String.format("%s%s", localize(string), divider);
 							remaining -= 1;
 						}
 					}
 
-					out(string);
+					outln(string);
 					break;
 				case RIGHT:
 					remaining -= string.length();
 					
 					while (remaining != 0) {
-						string = String.format("%s%s%n", divider, localize(string));
+						string = String.format("%s%s", divider, localize(string));
 						remaining -= 1;
 					}
 					
-					out(string);
+					outln(string);
 					break;
 				default:
 					break;
@@ -122,11 +122,11 @@ public class Console extends Languages {
 		String result = "";
 
 		while (remaining != 0) {
-			result = String.format("%s%s%n", result, character);
+			result = String.format("%s%s", result, character);
 			remaining -= 1;
 		}
 
-		out(result);
+		outln(result);
 	}
 
 
