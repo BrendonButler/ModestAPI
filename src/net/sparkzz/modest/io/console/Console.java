@@ -136,7 +136,7 @@ public class Console extends Languages {
 
 	public static void outf(String output, Object... regex) {
 		if (output != null)
-			System.out.println(localize(String.format(output, regex)));
+			System.out.print(localize(String.format(output, regex)));
 	}
 
 	public static void outln() {
