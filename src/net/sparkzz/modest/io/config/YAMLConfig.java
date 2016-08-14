@@ -300,7 +300,7 @@ public class YAMLConfig extends Validate implements Config {
 
 					prevNodes[prevNodes.length - 1].put(nodes[nodes.length - 1], object);
 
-					for (int i = prevNodes.length - 1; i > 1; i--)
+					for (int i = prevNodes.length - 1; i >= 1; i--)
 						prevNodes[i - 1].put(nodes[i], prevNodes[i]);
 
 					data.put(nodes[0], prevNodes[0]);
