@@ -178,28 +178,22 @@ public class JSONConfig extends Validate implements Config {
 		if (isEmpty())
 			return null;
 
-		if (key.contains(".")) {
-			String[] nodes = key.split("\\.");
-			Map currParent;
+		final String[] nodes = key.split("\\.");
+		Map curMap = data;
 
-			if (data.containsKey(nodes[0]) && (data.get(nodes[0]) instanceof Map))
-				currParent = (Map) data.get(nodes[0]);
-			else return null;
+		for (int i = 0; i <= nodes.length - 1; ++i) {
+			Object child = curMap.get(nodes[i]);
 
-			if (nodes.length > 1) {
-				for (int i = 1; i < nodes.length - 1; i++) {
-					if (currParent.containsKey(nodes[i]) && (currParent.get(nodes[i]) instanceof Map))
-						currParent = (Map) currParent.get(nodes[i]);
-					else return null;
-				}
-
-				if (currParent.containsKey(nodes[nodes.length - 1]))
-					return currParent.get(nodes[nodes.length - 1]);
+			if (child == null) return null;
+			else if (!(child instanceof Map)) {
+				if (i == nodes.length - 1)
+					return child;
+				else return null;
 			}
-		} else if (!contains(key) || (contains(key) && !hasValue(key)))
-			return null;
 
-		return data.get(key);
+			curMap = (Map) child;
+		}
+		return null;
 	}
 
 	public Set<?> getSet(String key) {
@@ -249,59 +243,39 @@ public class JSONConfig extends Validate implements Config {
 		if (!exists())
 			return;
 
-		if (key.contains(".")) {
-			String[] nodes = key.split("\\.");
+		final String[] nodes = key.split("\\.");
+		Map curMap = data;
 
-			// if data doesn't contain top-level node, create nested Maps
-			if (!data.containsKey(nodes[0])) {
-				Map<String, Object> currNode = new HashMap<>(), prevNode;
-				currNode.put(nodes[nodes.length - 1], object);
+		for (int i = 0; i <= nodes.length - 2; ++i) {
+			Object child = curMap.get(nodes[i]);
 
-				for (int i = nodes.length - 2; i > 0; i--) {
-					prevNode = currNode;
-
-					currNode = new HashMap<>();
-					currNode.put(nodes[i], prevNode);
-				}
-				// set top-level node to previous parent
-				data.put(nodes[0], currNode);
-			} else { // if data contains top-level node, work through each Map
-				Map[] prevNodes = new LinkedHashMap[nodes.length - 1];
-
-				if (nodes.length > 1) {
-					for (int i = 0; i <= nodes.length - 2; i++) {
-						if (data.containsKey(nodes[i]) && (data.get(nodes[i]) instanceof Map))
-							prevNodes[i] = new LinkedHashMap((Map) data.get(nodes[i]));
-						else if (!data.containsKey(nodes[i]))
-							prevNodes[i] = new LinkedHashMap();
-						else {
-							if (!overwrite) return;
-
-							prevNodes[i] = new LinkedHashMap();
-						}
-					}
-
-					prevNodes[prevNodes.length - 1].put(nodes[nodes.length - 1], object);
-
-					for (int i = prevNodes.length - 1; i > 1; i--)
-						prevNodes[i - 1].put(nodes[i], prevNodes[i]);
-
-					data.put(nodes[0], prevNodes[0]);
-				} else data.put(nodes[0], object);
+			if (child == null) child = new LinkedHashMap();
+			else if (!(child instanceof Map)) {
+				if (!overwrite) return;
+				child = new LinkedHashMap();
 			}
-			return;
+
+			curMap.put(nodes[i], child);
+			curMap = (Map) child;
 		}
-		data.put(key, object);
+		curMap.put(nodes[nodes.length - 1], object);
 	}
 
 	public void setProtection(boolean value) {
-		overwrite = value;
+		overwrite = !value;
 	}
 
 	public void load() {
 		try {
-			reader = new JsonReader(new FileReader(new File(configLocation + "/" + fileName)));
-			data = gson.fromJson(reader, new TypeToken<Map<String, Object>>(){}.getType());
+			File saveFile = new File(configLocation + "/" + fileName);
+
+			if (!saveFile.exists()) {
+				data = new LinkedHashMap();
+				return;
+			}
+
+			reader = new JsonReader(new FileReader(saveFile));
+			data = new LinkedHashMap(gson.fromJson(reader, new TypeToken<Map<String, Object>>(){}.getType()));
 		} catch (IOException exception) {
 			exception.printStackTrace();
 		}

@@ -2,13 +2,10 @@ package net.sparkzz.test;
 
 import net.sparkzz.modest.ModestGame;
 import net.sparkzz.modest.io.config.Config;
+import net.sparkzz.modest.io.config.JSONConfig;
 import net.sparkzz.modest.io.config.YAMLConfig;
 import net.sparkzz.modest.io.console.Console;
-import net.sparkzz.modest.utils.Languages;
 import net.sparkzz.modest.utils.Logger;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Brendon Butler on 3/28/2016.
@@ -34,25 +31,18 @@ public class Test extends ModestGame {
 	public void postInit() {
 		Config config = new YAMLConfig();
 
-		config.load();
+		config.setProtection(false);
 
-		Console.out(config.getString("testing.whereAreYouFrom"));
+		config.set("First.Second.Third", 3);
+		config.set("Player.Health", 20);
+		config.set("Player.Max_Health", 20);
+		config.set("Player.Is_Alive", true);
+		config.set("Player.Weapons.Axe", true);
+		config.set("Player.Weapons.Gun", false);
 
-		config.set("testing.times", 99);
-		config.set("this.is.a.test", "Hello World! This is ballin'");
+		Console.outln("" + config.getInteger("Player.Max_Health"));
 
-		Languages languages = new Languages();
-
-		Map testMap = new HashMap<>();
-
-		testMap.put("Hello World! This is ballin'", ".. or is it?");
-		testMap.put("A little land far, far away!", "AHH");
-
-		languages.addLanguage("test", testMap);
-		languages.setLanguage("test");
-
-		Console.out("A little land far, far away!");
-		Console.out(config.getString("this.is.a.test-a-rooni"));
+		Console.outln(config.getKeys().toString());
 
 		config.save();
 

@@ -175,6 +175,13 @@ public interface Config {
 	void set(String key, Object object);
 
 	/**
+	 * <p>Sets the overwrite feature on or off for configuration keys.</p>
+	 *
+	 * @param value Value of overwrite
+	 */
+	void setProtection(boolean value);
+
+	/**
 	 * <p>Loads configuration from file, then stores in variable.</p>
 	 */
 	void load();
