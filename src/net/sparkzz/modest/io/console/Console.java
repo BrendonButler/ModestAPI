@@ -58,7 +58,12 @@ public class Console extends Languages {
 		align(alignment, localize(string), ' ');
 	}
 
-	public static void align(Alignment alignment, String string, char divider) {
+	public static void align(Alignment alignment, String string, char filler) {
+		align(alignment, string, filler, 1);
+	}
+
+	// width of "0" will fill any empty space
+	public static void align(Alignment alignment, String string, char filler, int width) {
 		int remaining = maximumChars;
 		
 		if (!(string.length() >= maximumChars)) {
@@ -75,20 +80,20 @@ public class Console extends Languages {
 					remaining /= 2;
 
 					while (remaining != 0) {
-						string = String.format("%s%s%s", divider, localize(string), divider);
+						string = String.format("%s%s%s", filler, localize(string), filler);
 						remaining -= 1;
 					}
 
-					if (extra) string += divider;
+					if (extra) string += filler;
 
 					outln(string);
 					break;
 				case LEFT:
 					remaining -= string.length();
 
-					if (divider != ' ') {
+					if (filler != ' ') {
 						while (remaining != 0) {
-							string = String.format("%s%s", localize(string), divider);
+							string = String.format("%s%s", localize(string), filler);
 							remaining -= 1;
 						}
 					}
@@ -99,7 +104,7 @@ public class Console extends Languages {
 					remaining -= string.length();
 					
 					while (remaining != 0) {
-						string = String.format("%s%s", divider, localize(string));
+						string = String.format("%s%s", filler, localize(string));
 						remaining -= 1;
 					}
 					

@@ -2,7 +2,6 @@ package net.sparkzz.test;
 
 import net.sparkzz.modest.ModestGame;
 import net.sparkzz.modest.io.config.Config;
-import net.sparkzz.modest.io.config.JSONConfig;
 import net.sparkzz.modest.io.config.YAMLConfig;
 import net.sparkzz.modest.io.console.Console;
 import net.sparkzz.modest.utils.Logger;
