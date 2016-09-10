@@ -77,7 +77,7 @@
 
 	<build>
 		<sourceDirectory>src/</sourceDirectory>
-		<testSourceDirectory>test/</testSourceDirectory>
+		<testSourceDirectory>tests/</testSourceDirectory>
 
 		<plugins>
 			<plugin>
