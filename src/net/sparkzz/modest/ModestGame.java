@@ -14,7 +14,7 @@ import java.util.List;
  * @author Brendon Butler
  * @since  0.1
  */
-public class ModestGame {
+public abstract class ModestGame {
 
 	/**
 	 * <p>Tells the run loop whether to initialize again or not.</p>
@@ -94,17 +94,13 @@ public class ModestGame {
 	 * <p>To be run after initial setup is complete.</p>
 	 * <p>Will automatically be called unless the {@code run()} method is overridden.</p>
 	 */
-	protected void postInit() {
-		Console.out("Running");
-	}
+	protected abstract void postInit();
 
 	/**
 	 * <p>The initial setup of the program.</p>
 	 * <p>Will be automatically called unless the {@code run()} method is overridden.</p>
 	 */
-	protected void init() {
-
-	}
+	protected abstract void init();
 
 	/**
 	 * <p>This will halt the run loop.</p>
