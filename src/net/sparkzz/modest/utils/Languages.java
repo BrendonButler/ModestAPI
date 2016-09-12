@@ -24,7 +24,7 @@ public class Languages extends Validate {
 		if (locales.isEmpty() || locale.equals("") || !locales.containsKey(locale))
 			return input;
 
-		Map<String, String> regexMap = locales.get(activeLocale);
+		Map<String, String> regexMap = locales.get(locale);
 
 		Pattern pattern = Pattern.compile("(" + String.join("|", regexMap.keySet()) + ")");
 		Matcher matcher = pattern.matcher(input);
