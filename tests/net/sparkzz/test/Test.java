@@ -1,10 +1,18 @@
 package net.sparkzz.test;
 
 import net.sparkzz.modest.ModestGame;
+import net.sparkzz.modest.io.FileManager;
 import net.sparkzz.modest.io.config.Config;
 import net.sparkzz.modest.io.config.YAMLConfig;
 import net.sparkzz.modest.io.console.Console;
+import net.sparkzz.modest.utils.Languages;
 import net.sparkzz.modest.utils.Logger;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Brendon Butler on 3/28/2016.
@@ -28,22 +36,24 @@ public class Test extends ModestGame {
 
 	@Override
 	public void postInit() {
-		Config config = new YAMLConfig();
+		File tempFile = new File(System.getProperty("user.dir") + "/data/test-language.txt");
+		List<String> output = new LinkedList<>();
 
-		config.setProtection(false);
+		Map<String, String> languageTest = new HashMap<>();
 
-		config.set("First.Second.Third", 3);
-		config.set("Player.Health", 20);
-		config.set("Player.Max_Health", 20);
-		config.set("Player.Is_Alive", true);
-		config.set("Player.Weapons.Axe", true);
-		config.set("Player.Weapons.Gun", false);
+		languageTest.put("Test", "Nest");
+		languageTest.put("Cat", "Bat");
 
-		Console.outln("" + config.getInteger("Player.Max_Health"));
+		for (Map.Entry<String, String> entry : languageTest.entrySet())
+			output.add(String.format("%s=\"%s\"", entry.getKey(), entry.getValue()));
 
-		Console.outln(config.getKeys().toString());
+		tempFile.deleteOnExit();
 
-		config.save();
+		FileManager.write(tempFile.getParentFile(), tempFile.getName(), output);
+
+		Map<String, String> loadedResource = Languages.loadFromFile(tempFile.getAbsolutePath());
+
+		Console.outln(loadedResource.toString());
 
 		interrupt();
 	}

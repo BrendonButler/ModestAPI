@@ -75,7 +75,7 @@ public class FileManager {
 			writer = new FileWriter(file);
 
 			for (Object line : output)
-				writer.write(line.toString());
+				writer.write(line.toString() + System.getProperty("line.separator"));
 
 			writer.flush();
 			writer.close();
