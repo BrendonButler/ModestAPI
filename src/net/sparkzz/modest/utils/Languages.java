@@ -1,9 +1,13 @@
 package net.sparkzz.modest.utils;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,6 +19,28 @@ public class Languages extends Validate {
 
 	private static Map<String, Map<String, String>> locales = Collections.synchronizedMap(new HashMap<>());
 	private static String activeLocale;
+
+	public static Map<String, String> loadFromFile(String path) {
+		tryLoad: try {
+			if (path.toLowerCase().endsWith(".json")) {
+				Gson gson = new Gson();
+
+				File saveFile = new File(path);
+
+				if (!saveFile.exists()) break tryLoad;
+
+				JsonReader reader = new JsonReader(new FileReader(saveFile));
+				return new LinkedHashMap(gson.fromJson(reader, new TypeToken<Map<String, String>>() {}.getType()));
+			} else if (path.toLowerCase().endsWith(".yaml") || path.toLowerCase().endsWith(".yml")) {
+				// Yaml Parser
+			} else if (path.toLowerCase().endsWith(".txt")) {
+				// read text file
+			}
+		} catch (FileNotFoundException exception) {
+			exception.printStackTrace();
+		}
+		return null;
+	}
 
 	public static String localize(String input) {
 		return localize(activeLocale, input);

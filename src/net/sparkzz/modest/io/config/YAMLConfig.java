@@ -143,6 +143,11 @@ public class YAMLConfig extends Validate implements Config {
 		return -1;
 	}
 
+	@Override
+	public File getSaveLocation() {
+		return configLocation;
+	}
+
 	public int getInteger(String key) {
 		tempObject = get(key);
 

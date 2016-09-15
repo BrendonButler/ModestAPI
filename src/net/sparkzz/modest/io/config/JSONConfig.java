@@ -34,6 +34,12 @@ public class JSONConfig extends Validate implements Config {
 		load();
 	}
 
+	public JSONConfig(File file) {
+		configLocation = file.getParentFile();
+		fileName = file.getName();
+		load();
+	}
+
 	public JSONConfig(File folder, String fileName) {
 		configLocation = folder;
 		this.fileName = fileName + ".json";
@@ -120,6 +126,11 @@ public class JSONConfig extends Validate implements Config {
 		if (tempObject instanceof Number)
 			return Double.parseDouble(tempObject.toString());
 		return -1;
+	}
+
+	@Override
+	public File getSaveLocation() {
+		return configLocation;
 	}
 
 	public int getInteger(String key) {

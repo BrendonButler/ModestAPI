@@ -1,5 +1,6 @@
 package net.sparkzz.modest.io.config;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -79,6 +80,13 @@ public interface Config {
 	 * @return {@link Double} from config using key.
 	 */
 	double getDouble(String key);
+
+	/**
+	 * <p>Gets the save file location.</p>
+	 *
+	 * @return Save {@Link File} location.
+	 */
+	File getSaveLocation();
 
 	/**
 	 * <p>Gets {@link Integer} from configuration.</p>
